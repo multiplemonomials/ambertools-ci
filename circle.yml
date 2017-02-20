@@ -11,4 +11,5 @@ test:
     - source devtools/ci/circleci_build.sh
   post:
     - mkdir $CIRCLE_ARTIFACTS/ambertools-build
+    - ls $HOME/TMP/
     - cp -rf $HOME/TMP/* $CIRCLE_ARTIFACTS/ambertools-build
