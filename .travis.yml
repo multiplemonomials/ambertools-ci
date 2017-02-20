@@ -21,6 +21,9 @@ addons:
     - g++-5
     - gfortran
     - unzip
+    - csh
+    - flex
+    - patch
 
 install:
     - source devtools/ci/load_functions.sh
