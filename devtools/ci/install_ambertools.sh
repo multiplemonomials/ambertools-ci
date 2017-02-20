@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 function install_ambertools(){
     # This AmberTools version is not an official release. It is meant for testing.
     # DO NOT USE IT PLEASE.
