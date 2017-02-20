@@ -22,9 +22,6 @@ addons:
     - gfortran
     - unzip
 
-before_install:
-    - echo "before_install: need nothing"
-
 install:
     - source devtools/ci/install_ambertools.sh
 
