@@ -14,19 +14,19 @@ function install_ambertools_travis(){
     # This AmberTools version is not an official release. It is meant for testing.
     # DO NOT USE IT PLEASE.
     cd amber$version
-    if [ "MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
+    if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
         yes | ./configure gnu
-    elif [ "MINICONDA_IN_AMBERHOME" = "True" ]; then
+    elif [ "$MINICONDA_IN_AMBERHOME" = "True" ]; then
         bash AmberTools/src/configure_python --prefix `pwd`
         ./configure gnu
-    elif [ "USE_WITH_PYTHON" = "True" ]; then
+    elif [ "$USE_WITH_PYTHON" = "True" ]; then
         bash AmberTools/src/configure_python --prefix $HOME
         export PATH=$HOME/miniconda/bin:$PATH
         ./configure --with-python $HOME/miniconda/bin/python gnu
-    elif [ "SKIP_PYTHON" = "True" ]; then
+    elif [ "$SKIP_PYTHON" = "True" ]; then
         ./configure --skip-python gnu
         source amber.sh # for nab
-    elif [ "PYTHON_VERSION" = "3.5" ]; then
+    elif [ "$PYTHON_VERSION" = "3.5" ]; then
         bash AmberTools/src/configure_python --prefix $HOME -v $PYTHON_VERSION
         export PATH=$HOME/miniconda/bin:$PATH
         ./configure --with-python $HOME/miniconda/bin/python gnu
