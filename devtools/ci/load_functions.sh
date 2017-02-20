@@ -37,5 +37,5 @@ function install_ambertools_travis(){
 function install_ambertools_circleci(){
     mkdir $HOME/TMP
     cd $HOME/TMP
-    python $HOME/amber$version/AmberTools/src/conda-recipe/scripts/build_all.py --exclude-osx --py 2.7
+    python $HOME/ambertools-test/amber$version/AmberTools/src/conda-recipe/scripts/build_all.py --exclude-osx --py 2.7
 }
