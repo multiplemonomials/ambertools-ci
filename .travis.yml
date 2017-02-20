@@ -2,7 +2,6 @@ language: cpp
 
 matrix:
   include:
-     - { os: linux, env: PYTHON_VERSION=2.7 }
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True}
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True}
      - { os: linux, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True}
