@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function download_ambertools(){
+function install_ambertools(){
     # This AmberTools version is not an official release. It is meant for testing.
     # DO NOT USE IT PLEASE.
     version="AmberTools17.20feb17.tar.bz2"
@@ -28,3 +28,5 @@ function download_ambertools(){
     fi
     make install -j2
 }
+
+install_ambertools
