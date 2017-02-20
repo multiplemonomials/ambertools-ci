@@ -3,8 +3,8 @@
 version=17
 
 function download_ambertools(){
-    tarfile="AmberTools17.20feb17.tar.bz2"
-    url="https://www.dropbox.com/s/t3uudgldmun2lh7/$tarfile?dl=1"
+    tarfile="AmberTools17.20feb17.tar.gz"
+    url="https://www.dropbox.com/s/5w30b9m3tsuvu2a/AmberTools17.20feb17.tar.gz?dl=1"
     wget $url -O $tarfile
     tar -xf $tarfile
 }
