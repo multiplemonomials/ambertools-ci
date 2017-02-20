@@ -23,7 +23,9 @@ addons:
     - unzip
 
 install:
-    - source devtools/ci/install_ambertools.sh
+    - source devtools/ci/load_functions.sh
+    - download_ambertools
+    - install_ambertools_travis
 
 after_success:
     - echo "Congrats. Happy computing"
