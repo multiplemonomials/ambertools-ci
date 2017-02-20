@@ -29,6 +29,9 @@ install:
     - download_ambertools
     - install_ambertools_travis
 
+script:
+    - echo "hello"
+
 after_success:
     - echo "Congrats. Happy computing"
 
