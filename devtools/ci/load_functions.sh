@@ -42,9 +42,9 @@ function install_ambertools_travis(){
             bash AmberTools/src/configure_python --prefix $HOME -v 3
             export PATH=$HOME/miniconda/bin:$PATH
             ./configure --with-python $HOME/miniconda/bin/python gnu
+        fi
     fi
     make install -j2
-
 }
 
 function install_ambertools_circleci(){
