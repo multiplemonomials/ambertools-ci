@@ -35,7 +35,7 @@ function install_ambertools_travis(){
         elif [ "$SKIP_PYTHON" = "True" ]; then
             ./configure --skip-python gnu
         elif [ "$PYTHON_VERSION" = "3.5" ]; then
-            bash AmberTools/src/configure_python --prefix $HOME -v $PYTHON_VERSION
+            bash AmberTools/src/configure_python --prefix $HOME -v 3
             export PATH=$HOME/miniconda/bin:$PATH
             ./configure --with-python $HOME/miniconda/bin/python gnu
         fi
