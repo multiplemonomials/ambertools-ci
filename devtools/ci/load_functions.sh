@@ -56,5 +56,6 @@ function run_tests(){
     else
         source $TRAVIS_BUILD_DIR/amber$version/amber.sh
     fi
+    (cd $AMBERHOME/test/sanderapi && make)
     (cd $AMBERHOME/AmberTools/test && make)
 }
