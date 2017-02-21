@@ -96,6 +96,6 @@ function run_tests(){
         run_long_test_simplified
     else
         cat $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
-        sh $HOME/run_test.sh
+        bash $HOME/run_test.sh
     fi
 }
