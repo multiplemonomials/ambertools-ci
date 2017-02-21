@@ -49,6 +49,38 @@ function install_ambertools_circleci(){
     python $HOME/ambertools-test/amber$version/AmberTools/src/conda-recipe/scripts/build_all.py --exclude-osx --py 2.7
 }
 
+function run_long_test_simplified(){
+    # not running all tests, skip any long long test.
+    (cd $AMBERHOME/test/sanderapi && make)
+    cd $AMBERHOME/AmberTools/test
+
+    make clean
+    make is_amberhome_defined
+    make test.cpptraj
+	make test.pytraj
+    make test.parmed
+    make test.pdb4amber
+    make test.nab
+    make test.antechamber
+    make test.mdgx
+	make test.leap
+    make test.unitcell
+    make test.resp
+    make test.reduce
+    make test.pbsa
+    make test.gbnsr6
+	make test.mmpbsa
+    make test.elsize
+    make test.sqm
+	make test.paramfit
+    make test.mm_pbsa
+	make test.FEW
+    make test.cphstats
+    make test.charmmlipid2amber
+    make test.cpinutil
+    make test.pymsmt
+}
+
 function run_tests(){
     set -ex
     if [ "$USE_AMBER_PREFIX" = "True" ]; then
@@ -56,8 +88,10 @@ function run_tests(){
     else
         source $TRAVIS_BUILD_DIR/amber$version/amber.sh
     fi
-    cat $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
-    sh $HOME/run_test.sh
-    # (cd $AMBERHOME/test/sanderapi && make)
-    # (cd $AMBERHOME/AmberTools/test && make)
+    if [ "$TEST_LONG" = "True" ]; then
+        run_long_test_simplified
+    else
+        cat $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
+        sh $HOME/run_test.sh
+    fi
 }
