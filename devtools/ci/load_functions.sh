@@ -34,13 +34,17 @@ function install_ambertools_travis(){
             ./configure --with-python $HOME/miniconda/bin/python gnu
         elif [ "$SKIP_PYTHON" = "True" ]; then
             ./configure --skip-python gnu
+        elif [ "$AMBER_INSTALL_MPI" = "True" ]; then
+            yes | ./configure gnu
+            make install -j2
+            ./configure -mpi gnu # will do make install later
         elif [ "$PYTHON_VERSION" = "3.5" ]; then
             bash AmberTools/src/configure_python --prefix $HOME -v 3
             export PATH=$HOME/miniconda/bin:$PATH
             ./configure --with-python $HOME/miniconda/bin/python gnu
-        fi
     fi
     make install -j2
+
 }
 
 function install_ambertools_circleci(){
