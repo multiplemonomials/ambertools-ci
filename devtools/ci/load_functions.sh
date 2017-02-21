@@ -54,7 +54,7 @@ function run_tests(){
     if [ "$USE_AMBER_PREFIX" = "True" ]; then
         source $HOME/TMP/amber$version/amber.sh
     else
-        source $HOME/amber$version/amber.sh
+        source $HOME/ambertools-test/amber$version/amber.sh
     fi
     source $HOME/amber$version/AmberTools/src/conda-recipe/run_tests.sh
 }
