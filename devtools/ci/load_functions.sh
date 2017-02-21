@@ -1,10 +1,10 @@
 #!/bin/sh
 
-version=17
+url="http://ambermd.org/downloads/ambertools-dev/AmberTools17.21feb17.tar.gz"
+tarfile=`python -c "url='$url'; print(url.split('/')[-1])"`
+version=`python -c "tarfile='$tarfile'; print(tarfile.split('.')[0][-2:])"`
 
 function download_ambertools(){
-    tarfile="AmberTools17.20feb17.tar.gz"
-    url="https://www.dropbox.com/s/5w30b9m3tsuvu2a/AmberTools17.20feb17.tar.gz?dl=1"
     wget $url -O $tarfile
     tar -xf $tarfile
 }
