@@ -52,7 +52,7 @@ function install_ambertools_circleci(){
 function run_tests(){
     set -ex
     if [ "$USE_AMBER_PREFIX" = "True" ]; then
-        source $HOME/TMP/amber$version/amber.sh
+        source $HOME/TMP/amber.sh
     else
         source $HOME/ambertools-test/amber$version/amber.sh
     fi
