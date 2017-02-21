@@ -56,5 +56,5 @@ function run_tests(){
     else
         source $TRAVIS_BUILD_DIR/amber$version/amber.sh
     fi
-    source $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_test.sh
+    (cd $AMBERHOME/AmberTools/test && make)
 }
