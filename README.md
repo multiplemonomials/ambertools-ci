@@ -3,3 +3,12 @@
 
 # ambertools-test
 For testing AmberTools
+
+# How to run your own change?
+- make your own AmberTools17.{date}.tar.gz file
+    cd $AMBERHOME
+    sh ./mkrelease_at
+    # then upload to somewhere
+- update AmberTools17 url in [devtools/ci/load_functions.sh](devtools/ci/load_functions.sh)
+- update your own test in [devtools/ci/load_functions.sh](devtools/ci/load_functions.sh)
+- make a pull request to this repo or [activate your travis account](https://travis-ci.org/getting_started)
