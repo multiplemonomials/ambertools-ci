@@ -54,7 +54,7 @@ function run_tests(){
     if [ "$USE_AMBER_PREFIX" = "True" ]; then
         source $HOME/TMP/amber.sh
     else
-        source $HOME/ambertools-test/amber$version/amber.sh
+        source $TRAVIS_BUILD_DIR/amber$version/amber.sh
     fi
-    source $HOME/amber$version/AmberTools/src/conda-recipe/run_tests.sh
+    source $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_tests.sh
 }
