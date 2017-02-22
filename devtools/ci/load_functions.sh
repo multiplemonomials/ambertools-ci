@@ -51,6 +51,7 @@ function install_ambertools_circleci(){
     mkdir $HOME/TMP
     cd $HOME/TMP
     python $HOME/ambertools-test/amber$version/AmberTools/src/conda-recipe/scripts/build_all.py --exclude-osx --py 2.7 --sudo
+    python $HOME/ambertools-test/amber$version/AmberTools/src/conda-recipe/scripts/build_all.py --exclude-osx --py 2.7 --sudo -t ambermini
 }
 
 function run_long_test_simplified(){
@@ -100,5 +101,6 @@ function run_tests(){
             bash $HOME/run_test.sh
         else
             (cd $AMBERHOME/AmberTools/test && make test.ambermini)
+        fi
     fi
 }
