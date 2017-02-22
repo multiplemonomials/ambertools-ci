@@ -95,7 +95,10 @@ function run_tests(){
     if [ "$TEST_LONG" = "True" ]; then
         run_long_test_simplified
     else
-        cat $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
-        bash $HOME/run_test.sh
+        if [ "$SKIP_PYTHON" != "True" ]; then
+            cat $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
+            bash $HOME/run_test.sh
+        else
+            (cd $AMBERHOME/AmberTools/test && make test.ambermini)
     fi
 }
