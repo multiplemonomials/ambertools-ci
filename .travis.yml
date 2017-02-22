@@ -1,0 +1,46 @@
+language: cpp
+
+matrix:
+  include:
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_LONG=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 SKIP_PYTHON=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 AMBER_INSTALL_MPI=True}
+     - { os: linux, env: PYTHON_VERSION=3.5 } 
+       # - { os: osx, env: PYTHON_VERSION=3.5 } 
+
+sudo: true
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-5
+    - g++-5
+    - gfortran
+    - unzip
+    - csh
+    - flex
+    - patch
+    - openmpi-bin
+    - openmpi-common
+    - libopenmpi-dev
+
+install:
+    - echo "TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR"
+    - source devtools/ci/load_functions.sh
+    - download_ambertools
+    - install_ambertools_travis
+
+script:
+    - run_tests
+
+after_success:
+    - echo "Congrats. Happy computing"
+
+notifications:
+  email: false
