@@ -72,7 +72,7 @@ function run_long_test_simplified(){
     make test.unitcell
     make test.resp
     make test.reduce
-    make test.pbsa
+    # make test.pbsa
     make test.gbnsr6
     make test.mmpbsa
     make test.elsize
