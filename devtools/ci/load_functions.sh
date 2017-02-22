@@ -83,7 +83,7 @@ function run_long_test_simplified(){
     make test.cphstats
     # make test.charmmlipid2amber
     make test.cpinutil
-    make test.pymsmt
+    # make test.pymsmt
 }
 
 function run_tests(){
