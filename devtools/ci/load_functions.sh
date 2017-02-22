@@ -101,5 +101,6 @@ function run_tests(){
             bash $HOME/run_test.sh
         else
             (cd $AMBERHOME/AmberTools/test && make test.ambermini)
+        fi
     fi
 }
