@@ -64,23 +64,23 @@ function run_long_test_simplified(){
     make test.pytraj
     make test.parmed
     make test.pdb4amber
-    make test.nab
-    make test.antechamber
-    make test.mdgx
     make test.leap
     make test.unitcell
+    make test.antechamber
+    make test.nab
+    make test.mdgx
     make test.resp
     make test.reduce
-    make test.pbsa
+    # make test.pbsa
     make test.gbnsr6
-    make test.mmpbsa
+    # make test.mmpbsa
     make test.elsize
     make test.sqm
     make test.paramfit
-    make test.mm_pbsa
+    # make test.mm_pbsa
     make test.FEW
     make test.cphstats
-    make test.charmmlipid2amber
+    # make test.charmmlipid2amber
     make test.cpinutil
     make test.pymsmt
 }
