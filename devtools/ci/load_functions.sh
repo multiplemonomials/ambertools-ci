@@ -58,32 +58,7 @@ function run_long_test_simplified(){
     # not running all tests, skip any long long test.
     (cd $AMBERHOME/test/sanderapi && make)
     cd $AMBERHOME/AmberTools/test
-
-    make clean
-    make is_amberhome_defined
-    make test.cpptraj
-    make test.pytraj
-    make test.parmed
-    make test.pdb4amber
-    make test.leap
-    make test.unitcell
-    make test.antechamber
-    make test.nab
-    make test.mdgx
-    make test.resp
-    make test.reduce
-    # make test.pbsa
-    make test.gbnsr6
-    # make test.mmpbsa
-    make test.elsize
-    make test.sqm
-    make test.paramfit
-    # make test.mm_pbsa
-    make test.FEW
-    make test.cphstats
-    # make test.charmmlipid2amber
-    make test.cpinutil
-    # make test.pymsmt
+    python -m pytest -vs $TRAVIS_BUILD_DIR/devtools/ci/ci_test.py
 }
 
 function run_tests(){

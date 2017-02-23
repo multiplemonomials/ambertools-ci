@@ -31,7 +31,7 @@ addons:
     - libopenmpi-dev
 
 install:
-    - echo "TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR"
+    - pip install pytest --user
     - source devtools/ci/load_functions.sh
     - download_ambertools
     - install_ambertools_travis
