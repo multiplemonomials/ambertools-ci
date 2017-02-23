@@ -4,12 +4,16 @@ matrix:
   include:
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True}
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True}
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_LONG=True}
-     - { os: linux, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast}
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=fast} # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=mmpbsa} # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=rism} # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_MM} # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_QMMM} # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True TEST_TASK=python}
      - { os: linux, env: PYTHON_VERSION=2.7 SKIP_PYTHON=True}
-     - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True}
+     - { os: linux, env: PYTHON_VERSION=3.5 TEST_TASK=python} 
      - { os: linux, env: PYTHON_VERSION=2.7 AMBER_INSTALL_MPI=True}
-     - { os: linux, env: PYTHON_VERSION=3.5 } 
        # - { os: osx, env: PYTHON_VERSION=3.5 } 
 
 sudo: true
@@ -29,9 +33,9 @@ addons:
     - openmpi-bin
     - openmpi-common
     - libopenmpi-dev
+    - xutils-dev
 
 install:
-    - pip install pytest --user
     - source devtools/ci/load_functions.sh
     - download_ambertools
     - install_ambertools_travis

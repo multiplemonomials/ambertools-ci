@@ -56,8 +56,8 @@ function install_ambertools_circleci(){
 
 function run_long_test_simplified(){
     # not running all tests, skip any long long test.
-    (cd $AMBERHOME/test/sanderapi && make)
     cd $AMBERHOME/AmberTools/test
+    python -m pip install pytest --user
     python -m pytest -vs $TRAVIS_BUILD_DIR/devtools/ci/ci_test.py
 }
 
@@ -65,10 +65,13 @@ function run_tests(){
     set -ex
     if [ "$USE_AMBER_PREFIX" = "True" ]; then
         source $HOME/TMP/amber.sh
+        ls $AMBERHOME
+        ls $HOME/TMP/
+        ls $HOME/TMP/*/
     else
         source $TRAVIS_BUILD_DIR/amber$version/amber.sh
     fi
-    if [ "$TEST_LONG" = "True" ]; then
+    if [ "$TEST_TASK" != "" ]; then
         run_long_test_simplified
     else
         if [ "$SKIP_PYTHON" != "True" ]; then
