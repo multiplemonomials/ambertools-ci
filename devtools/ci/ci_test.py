@@ -5,6 +5,7 @@ import os
 import sys
 import subprocess
 
+
 @contextmanager
 def change_folder(where):
     here = os.getcwd()
@@ -13,31 +14,70 @@ def change_folder(where):
     os.chdir(here)
 
 
+def get_tests_from_test_name(test_name, makefile_fn):
+    # test.serial.sander.MM has a bunch of small tests.
+    with open(makefile_fn) as fh:
+        lines = fh.readlines()
+
+    index_0 = 0
+    index_next = -1
+    for index, line in enumerate(lines):
+        if line.startswith(test_name):
+            break
+    index_0 = index
+
+    for index in range(index_0 + 1, 1000):
+        if lines[index].startswith('test.'):
+            break
+
+    index_next = index
+    my_lines = [
+        word for word in ''.join(lines[index_0:index_next]).strip().split()
+        if word != '\\'
+    ]
+    my_lines.pop(0)
+    return my_lines
+
+
 test_task = os.getenv('TEST_TASK', 'fast')
-sanderapi_tests = ['test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean']
+sanderapi_tests = [
+    'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
+]
+amberhome = os.getenv('AMBERHOME')
+amber_test_dir = amberhome + '/test'
+ambertools_test_dir = amberhome + '/AmberTools/test'
 
 if test_task == 'fast':
-    programs = [
-                'test.cpptraj', 'test.pytraj', 'test.parmed', 'test.pdb4amber',
-                'test.leap', 'test.antechamber', 'test.unitcell', 'test.reduce',
-                'test.nab', 'test.mdgx', 'test.resp', 'test.sqm',
-                'test.gbnsr6', 'test.elsize', 'test.paramfit',
-                'test.FEW', 'test.cphstats', 'test.cpinutil']
+    test_suite = [
+        'test.cpptraj', 'test.pytraj', 'test.parmed', 'test.pdb4amber',
+        'test.leap', 'test.antechamber', 'test.unitcell', 'test.reduce',
+        'test.nab', 'test.mdgx', 'test.resp', 'test.sqm', 'test.gbnsr6',
+        'test.elsize', 'test.paramfit', 'test.FEW', 'test.cphstats',
+        'test.cpinutil'
+    ]
 elif test_task == 'mmpbsa':
-    programs = ['clean', 'is_amberhome_defined',
-                'test.mmpbsa', 'test.mm_pbsa',]
+    test_suite = [
+        'clean',
+        'is_amberhome_defined',
+        'test.mmpbsa',
+        'test.mm_pbsa',
+    ]
 elif test_task == 'rism':
-    programs = ['test.rism1d', 'test.rism3d.periodic']
+    test_suite = ['test.rism1d', 'test.rism3d.periodic']
 elif test_task == 'serial_MM':
-    programs = ['test.serial.MM']
+    test_suite = get_tests_from_test_name('test.serial.sander.MM',
+                                          amber_test_dir +
+                                          '/Makefile') + ['test.nmode', ]
 elif test_task == 'serial_QMMM':
-    programs = ['test.serial.QMMM']
+    test_suite = get_tests_from_test_name('test.serial.QMMM',
+                                          amber_test_dir + '/Makefile')
 elif test_task == 'python':
-    programs = ['test.pytraj', 'test.parmed', 'test.pdb4amber']
+    test_suite = ['test.pytraj', 'test.parmed', 'test.pdb4amber']
     # pymsmt have not passed its tests yet.
 else:
     print('not sure how to test with test_task = {}'.format(test_task))
     sys.exit(0)
+
 
 def execute(command):
     then = time()
@@ -45,7 +85,8 @@ def execute(command):
     # http://stackoverflow.com/a/4418193
     print(' '.join(command))
     output_lines = []
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    process = subprocess.Popen(
+        command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     # Poll process for new output until finished
     while True:
@@ -65,30 +106,30 @@ def execute(command):
         print('{0:.1f} (s), PASSED'.format(time_diff))
     return output
 
+
 def test_me():
     ERRORS = []
     amberhome = os.getenv('AMBERHOME')
 
-    def run_all(programs):
-        for me in programs:
+    def run_all(test_suite):
+        for me in test_suite:
             output = execute(['make', me])
-            if ('Program error' in output or
-                'possible FAILURE' in output or
-                'No rule to make target' in output):
+            if ('Program error' in output or 'possible FAILURE' in output or
+                    'No rule to make target' in output):
                 ERRORS.append(output)
 
-    print('programs', programs)
+    print('test_suite', test_suite)
     # amberXX/test/
     if test_task in ['serial_MM', 'serial_QMMM']:
         print('serial MM and QMMM')
-        test_folder = amberhome + '/test/'
+        test_folder = amber_test_dir
     # amberXX/AmberTools/test/
     else:
         print(amberhome + '/AmberTools/test/')
-        test_folder = amberhome + '/AmberTools/test/'
+        test_folder = ambertools_test_dir
     print('test_folder', test_folder)
     with change_folder(test_folder):
-        run_all(programs)
+        run_all(test_suite)
 
     # sanderapi
     with change_folder(amberhome + '/test/sanderapi'):
@@ -98,7 +139,8 @@ def test_me():
     if ERRORS:
         for out in ERRORS:
             print(out)
-    assert not ERRORS
+    assert len(ERRORS) == 0
+
 
 if __name__ == '__main__':
     test_me()
