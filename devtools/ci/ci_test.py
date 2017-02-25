@@ -55,6 +55,11 @@ if test_task == 'fast':
         'test.elsize', 'test.paramfit', 'test.FEW', 'test.cphstats',
         'test.cpinutil'
     ]
+if test_task == 'exp':
+    test_suite = [
+        # 'test.pytraj', 'test.pdb4amber',
+        'test.pytraj',
+    ]
 elif test_task == 'mmpbsa':
     test_suite = [
         'clean',
@@ -65,9 +70,13 @@ elif test_task == 'mmpbsa':
 elif test_task == 'rism':
     test_suite = ['test.rism1d', 'test.rism3d.periodic']
 elif test_task == 'serial_MM':
+    excluded_tests = ['test.serial.sander.emap', ]
+    print('excluded_tests', excluded_tests)
     test_suite = get_tests_from_test_name('test.serial.sander.MM',
                                           amber_test_dir +
                                           '/Makefile') + ['test.nmode', ]
+    for test in excluded_tests:
+        test_suite.remove(test)
 elif test_task == 'serial_QMMM':
     test_suite = get_tests_from_test_name('test.serial.QMMM',
                                           amber_test_dir + '/Makefile')
@@ -109,11 +118,13 @@ def execute(command):
 
 def test_me():
     ERRORS = []
+    ALL_OUTPUTS = []
     amberhome = os.getenv('AMBERHOME')
 
     def run_all(test_suite):
         for me in test_suite:
             output = execute(['make', me])
+            ALL_OUTPUTS.extend(output.split('\n'))
             if ('Program error' in output or 'possible FAILURE' in output or
                     'No rule to make target' in output):
                 ERRORS.append(output)
@@ -139,6 +150,19 @@ def test_me():
     if ERRORS:
         for out in ERRORS:
             print(out)
+
+    n_passes = n_fails = n_program_errors = 0
+
+    for line in ALL_OUTPUTS:
+        if 'PASSED' in line:
+            n_passes += 1
+        if 'Program error' in line:
+            n_program_errors += 1
+        if 'possible FAILURE' in line:
+            n_fails += 1
+    print("{} file comparisons passed".format(n_passes))
+    print("{} file comparisons failed".format(n_fails))
+    print("{} tests experienced errors".format(n_program_errors))
     assert len(ERRORS) == 0
 
 
