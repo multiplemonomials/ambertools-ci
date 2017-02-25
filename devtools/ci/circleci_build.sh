@@ -24,5 +24,6 @@ cd test
 lndir $amber_source/AmberTools/test
 cd $AMBERHOME
 touch config.h
+mkdir $AMBERHOME/AmberTools/src
 touch $AMBERHOME/AmberTools/src/config.h
 INSTALLTYPE make test
