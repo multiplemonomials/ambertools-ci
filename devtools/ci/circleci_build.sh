@@ -18,12 +18,12 @@ source amber.sh
 mkdir test
 cd test
 lndir $amber_source/test
-cd $AMBERHOME/AmberTools
-mkdir test
-cd test
+mkdir -p $AMBERHOME/AmberTools/test
+cd $AMBERHOME/AmberTools/test
 lndir $amber_source/AmberTools/test
+
 cd $AMBERHOME
 touch config.h
-mkdir $AMBERHOME/AmberTools/src
+mkdir -p $AMBERHOME/AmberTools/src
 touch $AMBERHOME/AmberTools/src/config.h
 INSTALLTYPE make test
