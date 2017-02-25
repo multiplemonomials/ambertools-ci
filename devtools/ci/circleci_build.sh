@@ -23,7 +23,10 @@ cd $AMBERHOME/AmberTools/test
 lndir $amber_source/AmberTools/test
 
 cd $AMBERHOME
-touch config.h
+cat > config.h <<EOF
+INSTALLTYPE=serial
+EOF
+
 mkdir -p $AMBERHOME/AmberTools/src
-touch $AMBERHOME/AmberTools/src/config.h
-INSTALLTYPE=serial make test
+cp config.h $AMBERHOME/AmberTools/src/
+make test
