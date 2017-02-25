@@ -26,4 +26,4 @@ cd $AMBERHOME
 touch config.h
 mkdir -p $AMBERHOME/AmberTools/src
 touch $AMBERHOME/AmberTools/src/config.h
-INSTALLTYPE make test
+INSTALLTYPE=serial make test
