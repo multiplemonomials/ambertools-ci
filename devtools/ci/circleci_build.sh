@@ -15,6 +15,7 @@ cd TEST
 tar -xf ../$fn
 cd amber17
 source amber.sh
+cp $amber_source/Makefile .
 mkdir test
 cd test
 lndir $amber_source/test
