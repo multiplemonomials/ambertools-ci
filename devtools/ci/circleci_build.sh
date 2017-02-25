@@ -30,4 +30,5 @@ EOF
 
 mkdir -p $AMBERHOME/AmberTools/src
 cp config.h $AMBERHOME/AmberTools/src/
-make test
+cd $AMBERHOME/test && make
+cd $AMBERHOME/AmberTools/test && make
