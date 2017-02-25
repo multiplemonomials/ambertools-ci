@@ -9,4 +9,4 @@ dependencies:
 
 test:
   override:
-    - source devtools/ci/circleci_build.sh
+    - bash devtools/ci/circleci_build.sh

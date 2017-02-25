@@ -1,6 +1,7 @@
 #!/bin/sh
 
 devtools_ci_dir=`cd $(dirname $0) && pwd`
+echo $devtools_ci_dir
 
 source devtools/ci/load_functions.sh
 # source code
