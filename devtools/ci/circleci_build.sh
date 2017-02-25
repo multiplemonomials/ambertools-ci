@@ -31,6 +31,6 @@ EOF
 
 mkdir -p $AMBERHOME/AmberTools/src
 cp config.h $AMBERHOME/AmberTools/src/
-( cd $AMBERHOME/test && make test.sander.serial.MM )
+( cd $AMBERHOME/test && make test.serial.sander.MM )
 ( cd $AMBERHOME/AmberTools/test && make )
 ( cd $AMBERHOME/test/sanderapi && make )
