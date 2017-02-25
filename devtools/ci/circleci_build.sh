@@ -18,10 +18,10 @@ source amber.sh
 cp $amber_source/Makefile .
 mkdir test
 cd test
-lndir $amber_source/test
+lndir $amber_source/test >& log.lndir
 mkdir -p $AMBERHOME/AmberTools/test
 cd $AMBERHOME/AmberTools/test
-lndir $amber_source/AmberTools/test
+lndir $amber_source/AmberTools/test >& log.lndirt2
 
 cd $AMBERHOME
 cat > config.h <<EOF
