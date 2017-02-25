@@ -1,5 +1,7 @@
 #!/bin/sh
 
+devtools_ci_dir=`cd $(dirname $0) && pwd`
+
 source devtools/ci/load_functions.sh
 # source code
 download_ambertools
@@ -34,6 +36,4 @@ EOF
 
 mkdir -p $AMBERHOME/AmberTools/src
 cp config.h $AMBERHOME/AmberTools/src/
-( cd $AMBERHOME/test && make test.serial.sander.MM )
-( cd $AMBERHOME/AmberTools/test && make )
-( cd $AMBERHOME/test/sanderapi && make )
+python $devtools_ci_dir/ci_test.py
