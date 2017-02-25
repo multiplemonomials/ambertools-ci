@@ -6,7 +6,7 @@ download_ambertools
 
 # binary
 fn='AT.binary.tar.bz2'
-url='https://circleci.com/api/v1.1/project/github/Amber-MD/ambertools-test/latest/artifacts?circle-token=$ATCITOKEN&branch=nightly&filter=successful'
+url='https://90-81537431-gh.circle-artifacts.com/0/tmp/circle-artifacts.mHmoQJ3/ambertools-build/amber-conda-bld/non-conda-install/linux-64.ambertools-17.0.0-py27_0.25Feb17.H0203.tar.bz2'
 wget $url -O $fn
 mkdir TEST
 cd TEST
