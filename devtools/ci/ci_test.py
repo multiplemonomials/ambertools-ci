@@ -65,9 +65,13 @@ elif test_task == 'mmpbsa':
 elif test_task == 'rism':
     test_suite = ['test.rism1d', 'test.rism3d.periodic']
 elif test_task == 'serial_MM':
+    excluded_tests = ['test.serial.sander.emap', ]
+    print('excluded_tests', excluded_tests)
     test_suite = get_tests_from_test_name('test.serial.sander.MM',
                                           amber_test_dir +
                                           '/Makefile') + ['test.nmode', ]
+    for test in excluded_tests:
+        test_suite.remove(test)
 elif test_task == 'serial_QMMM':
     test_suite = get_tests_from_test_name('test.serial.QMMM',
                                           amber_test_dir + '/Makefile')
