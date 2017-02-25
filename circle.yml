@@ -5,7 +5,7 @@ machine:
 dependencies:
   override:
       - docker pull ambermd/amber-build-box
-      - sudo apt-get install xutils-dev -y
+      - sudo apt-get install csh xutils-dev -y
 
 test:
   override:
