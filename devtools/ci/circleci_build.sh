@@ -26,9 +26,11 @@ lndir $amber_source/AmberTools/test >& log.lndirt2
 cd $AMBERHOME
 cat > config.h <<EOF
 INSTALLTYPE=serial
+AMBER_SOURCE=$amber_source
 EOF
 
 mkdir -p $AMBERHOME/AmberTools/src
 cp config.h $AMBERHOME/AmberTools/src/
-cd $AMBERHOME/test && make test.sander
-cd $AMBERHOME/AmberTools/test && make
+( cd $AMBERHOME/test && make test.sander.serial.MM )
+( cd $AMBERHOME/AmberTools/test && make )
+( cd $AMBERHOME/test/sanderapi && make )
