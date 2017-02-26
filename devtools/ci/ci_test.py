@@ -40,6 +40,7 @@ def get_tests_from_test_name(test_name, makefile_fn):
 
 
 test_task = os.getenv('TEST_TASK', 'fast')
+print('test_task = {}'.format(test_task))
 sanderapi_tests = [
     'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
 ]
@@ -77,6 +78,9 @@ elif test_task == 'serial_QMMM':
                                           amber_test_dir + '/Makefile')
 elif test_task == 'python':
     test_suite = ['test.pytraj', 'test.parmed', 'test.pdb4amber']
+    # pymsmt have not passed its tests yet.
+elif test_task == 'pytraj':
+    test_suite = ['test.pytraj']
     # pymsmt have not passed its tests yet.
 else:
     print('not sure how to test with test_task = {}'.format(test_task))
@@ -158,8 +162,10 @@ def test_me():
     print("{} file comparisons passed".format(n_passes))
     print("{} file comparisons failed".format(n_fails))
     print("{} tests experienced errors".format(n_program_errors))
-    assert len(ERRORS) == 0
 
+    if len(ERRORS) > 0:
+        print("FAILED")
+        sys.exit(1)
 
 if __name__ == '__main__':
     test_me()
