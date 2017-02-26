@@ -32,6 +32,7 @@ export PATH=$HOME/miniconda/bin:$PATH
 cat > config.h <<EOF
 INSTALLTYPE=serial
 AMBER_SOURCE=$amber_source
+AMBER_PREFIX=$AMBERHOME
 PYTHON=python
 EOF
 
