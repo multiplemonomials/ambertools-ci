@@ -27,15 +27,14 @@ cd $AMBERHOME/AmberTools/test
 lndir $amber_source/AmberTools/test >& log.lndirt2
 
 cd $AMBERHOME
-sh bin/configure_python --prefix $AMBERHOME
-which amber.python
+sh bin/configure_python --prefix $HOME
+export PATH=$HOME/miniconda/bin:$PATH
 cat > config.h <<EOF
 INSTALLTYPE=serial
 AMBER_SOURCE=$amber_source
-PYTHON=amber.python
+PYTHON=python
 EOF
 
 mkdir -p $AMBERHOME/AmberTools/src
 cp config.h $AMBERHOME/AmberTools/src/
-( cd $AMBERHOME/bin && ln -s ../miniconda/bin/python python)
-amber.python $devtools_ci_dir/ci_test.py
+python $devtools_ci_dir/ci_test.py
