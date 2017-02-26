@@ -55,11 +55,6 @@ if test_task == 'fast':
         'test.elsize', 'test.paramfit', 'test.FEW', 'test.cphstats',
         'test.cpinutil'
     ]
-if test_task == 'exp':
-    test_suite = [
-        # 'test.pytraj', 'test.pdb4amber',
-        'test.pytraj',
-    ]
 elif test_task == 'mmpbsa':
     test_suite = [
         'clean',
