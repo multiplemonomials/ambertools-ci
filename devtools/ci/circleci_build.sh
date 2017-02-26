@@ -37,4 +37,5 @@ EOF
 
 mkdir -p $AMBERHOME/AmberTools/src
 cp config.h $AMBERHOME/AmberTools/src/
+( cd $AMBERHOME/bin && ln -s ../miniconda/bin/python python)
 amber.python $devtools_ci_dir/ci_test.py
