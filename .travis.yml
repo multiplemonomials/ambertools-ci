@@ -45,4 +45,9 @@ after_success:
     - echo "Congrats. Happy computing"
 
 notifications:
-  email: false
+  email:
+    recipients:
+      - nhai.qn@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
+  
