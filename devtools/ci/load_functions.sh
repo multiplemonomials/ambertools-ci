@@ -60,6 +60,13 @@ function run_long_test_simplified(){
     python $TRAVIS_BUILD_DIR/devtools/ci/ci_test.py
 }
 
+function circleci_test(){
+    # install conda
+    bash $HOME/ambertools-test/amber$version/AmberTools/src/configure_python --prefix $HOME
+    export PATH=$HOME/miniconda/bin:$PATH
+    python $HOME/ambertools-test/amber$version/AmberTools/src/conda_tools/test_multiple_pythons.py
+}
+
 function run_tests(){
     set -ex
     if [ "$USE_AMBER_PREFIX" = "True" ]; then
