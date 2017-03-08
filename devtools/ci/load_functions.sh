@@ -21,7 +21,11 @@ function install_ambertools_travis(){
         ./configure --with-python $HOME/miniconda/bin/python -macAccelerate clang
     else
         if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
-            yes | ./configure gnu
+            if [ "$COMPILER" = "clang" ]; then
+                yes | ./configure clang
+            else
+                yes | ./configure gnu
+            fi
         elif [ "$MINICONDA_IN_AMBERHOME" = "True" ]; then
             bash AmberTools/src/configure_python --prefix `pwd`
             ./configure gnu

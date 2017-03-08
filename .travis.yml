@@ -5,6 +5,7 @@ matrix:
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_MM} # amber17/test
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_QMMM} # amber17/test
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=fast}
+     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True COMPILER=clang TEST_TASK=fast}
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True TEST_TASK=python} # Ambertools/test
      - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast}
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=mmpbsa} # Ambertools/test
@@ -32,6 +33,7 @@ addons:
     - openmpi-common
     - libopenmpi-dev
     - xutils-dev
+    - clang
 
 install:
     - source devtools/ci/load_functions.sh
