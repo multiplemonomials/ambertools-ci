@@ -22,6 +22,7 @@ function install_ambertools_travis(){
     else
         if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
             if [ "$COMPILER" = "clang" ]; then
+                unset CC CXX
                 yes | ./configure clang
             else
                 yes | ./configure gnu
