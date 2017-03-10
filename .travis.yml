@@ -36,6 +36,7 @@ before_install:
       brew update;
       brew install netcdf fftw;
       sudo sh devtools/ci/install_gfortran.sh;
+      shell_session_update() { echo "Overriding shell_session_update"; };
     fi
 
 install:
