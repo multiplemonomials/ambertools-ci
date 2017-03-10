@@ -20,6 +20,14 @@ addons:
     - xutils-dev
     - clang
 
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+      brew tap homebrew/science;
+      brew update;
+      brew install netcdf fftw;
+      sudo sh devtools/ci/install_gfortran.sh
+    fi
+
 install:
     - source devtools/ci/load_functions.sh
     - download_ambertools
