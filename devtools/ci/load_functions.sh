@@ -16,9 +16,7 @@ function install_ambertools_travis(){
     osname=`python -c 'import sys; print(sys.platform)'`
     cd amber$version
     if [ $osname = "darwin" ]; then
-        bash AmberTools/src/configure_python --prefix $HOME -v $PYTHON_VERSION
-        export PATH=$HOME/miniconda/bin:$PATH
-        ./configure --with-python $HOME/miniconda/bin/python -macAccelerate clang
+        yes | ./configure -macAccelerate clang
     else
         if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
             if [ "$COMPILER" = "clang" ]; then
