@@ -16,6 +16,7 @@ function install_ambertools_travis(){
     osname=`python -c 'import sys; print(sys.platform)'`
     cd amber$version
     if [ $osname = "darwin" ]; then
+        unset CC CXX
         yes | ./configure -macAccelerate clang
     else
         if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
