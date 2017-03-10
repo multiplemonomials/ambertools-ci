@@ -25,7 +25,7 @@ before_install:
       brew tap homebrew/science;
       brew update;
       brew install netcdf fftw;
-      sudo sh devtools/ci/install_gfortran.sh
+      sudo sh devtools/ci/install_gfortran.sh;
     fi
 
 install:
