@@ -1,4 +1,18 @@
 #!/usr/bin/env python
+# Run most of AmberTools serial tests
+''' Require: AMBERHOME
+
+You need to call amber.setup_test_folders first (only do once)
+
+     amber.setup_test_folders
+
+Then run test (anywhere)
+
+    ci_test.py
+
+Adjust the test by updating env TEST_TASK (please lookt at the code)
+'''
+
 from time import time
 from contextlib import contextmanager
 import os
@@ -12,6 +26,22 @@ def change_folder(where):
     os.chdir(where)
     yield
     os.chdir(here)
+
+
+def cat_dif_files(amberhome):
+    print('*' * 50)
+    print("Oops")
+    print('( ˘︹˘ )'*6)
+    print('*' * 50)
+    with change_folder(amberhome):
+        output = subprocess.check_output(
+            'find . -iname "*.dif"', shell=True).decode()
+
+        files = [fn for fn in output.split('\n') if fn]
+        for fn in files:
+            with open(fn) as fh:
+                print(fn)
+                print(fh.read())
 
 
 def get_tests_from_test_name(test_name, makefile_fn):
@@ -40,7 +70,6 @@ def get_tests_from_test_name(test_name, makefile_fn):
 
 
 test_task = os.getenv('TEST_TASK', 'fast')
-print('test_task = {}'.format(test_task))
 sanderapi_tests = [
     'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
 ]
@@ -56,6 +85,11 @@ if test_task == 'fast':
         'test.elsize', 'test.paramfit', 'test.FEW', 'test.cphstats',
         'test.cpinutil'
     ]
+elif test_task == 'exp':
+    test_suite = [
+        # 'test.pytraj', 'test.pdb4amber',
+        'test.pytraj',
+    ]
 elif test_task == 'mmpbsa':
     test_suite = [
         'clean',
@@ -66,25 +100,26 @@ elif test_task == 'mmpbsa':
 elif test_task == 'rism':
     test_suite = ['test.rism1d', 'test.rism3d.periodic']
 elif test_task == 'serial_MM':
-    excluded_tests = ['test.serial.sander.emap', ]
+    excluded_tests = [
+        'test.serial.sander.emap',
+    ]
     print('excluded_tests', excluded_tests)
     test_suite = get_tests_from_test_name('test.serial.sander.MM',
-                                          amber_test_dir +
-                                          '/Makefile') + ['test.nmode', ]
+                                          amber_test_dir + '/Makefile') + [
+                                              'test.nmode',
+                                          ]
     for test in excluded_tests:
         test_suite.remove(test)
 elif test_task == 'serial_QMMM':
     test_suite = get_tests_from_test_name('test.serial.QMMM',
                                           amber_test_dir + '/Makefile')
 elif test_task == 'python':
-    test_suite = ['test.pytraj', 'test.parmed', 'test.pdb4amber']
-    # pymsmt have not passed its tests yet.
-elif test_task == 'pytraj':
-    test_suite = ['test.pytraj']
+    test_suite = [
+        'test.pytraj', 'test.parmed', 'test.pdb4amber', 'test.sanderapi'
+    ]
     # pymsmt have not passed its tests yet.
 else:
-    print('not sure how to test with test_task = {}'.format(test_task))
-    sys.exit(0)
+    test_suite = ['test.' + test_task]
 
 
 def execute(command):
@@ -98,7 +133,7 @@ def execute(command):
 
     # Poll process for new output until finished
     while True:
-        nextline = process.stdout.readline().decode()
+        nextline = process.stdout.readline().decode('utf-8')
         if nextline == '' and process.poll() is not None:
             break
         sys.stdout.write('.')
@@ -137,14 +172,17 @@ def test_me():
     else:
         print(amberhome + '/AmberTools/test/')
         test_folder = ambertools_test_dir
+
+    if test_task == 'python':
+        # sanderapi
+        test_suite.remove('test.sanderapi')
+        with change_folder(amberhome + '/test/sanderapi'):
+            print(amberhome + '/test/sanderapi')
+            run_all(sanderapi_tests)
+
     print('test_folder', test_folder)
     with change_folder(test_folder):
         run_all(test_suite)
-
-    # sanderapi
-    with change_folder(amberhome + '/test/sanderapi'):
-        print(amberhome + '/test/sanderapi')
-        run_all(sanderapi_tests)
 
     if ERRORS:
         for out in ERRORS:
@@ -163,9 +201,12 @@ def test_me():
     print("{} file comparisons failed".format(n_fails))
     print("{} tests experienced errors".format(n_program_errors))
 
-    if len(ERRORS) > 0:
-        print("FAILED")
-        sys.exit(1)
+    if n_fails > 0:
+        cat_dif_files(amberhome)
+
+    assert len(ERRORS) == 0
+
 
 if __name__ == '__main__':
+    # cat_dif_files(os.environ.get('AMBERHOME'))
     test_me()
