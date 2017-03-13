@@ -9,7 +9,7 @@ dependencies:
 test:
   override:
     - source devtools/ci/circleci_build.sh
-  # - source devtools/ci/load_functions.sh && circleci_test # bug: not found "source", ack
+    - bash devtools/ci/circleci_test.sh || exit 1
   post:
     - mkdir $CIRCLE_ARTIFACTS/ambertools-build
     - ls $HOME/TMP/
