@@ -16,39 +16,35 @@ function install_ambertools_travis(){
     osname=`python -c 'import sys; print(sys.platform)'`
     cd amber$version
     if [ $osname = "darwin" ]; then
-        bash AmberTools/src/configure_python --prefix $HOME -v $PYTHON_VERSION
-        export PATH=$HOME/miniconda/bin:$PATH
-        ./configure --with-python $HOME/miniconda/bin/python -macAccelerate clang
+        unset CC CXX
+        compiler="-macAccelerate clang"
     else
-        if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
-            if [ "$COMPILER" = "clang" ]; then
-                unset CC CXX
-                yes | ./configure clang
-            else
-                yes | ./configure gnu
-            fi
-        elif [ "$MINICONDA_IN_AMBERHOME" = "True" ]; then
-            bash AmberTools/src/configure_python --prefix `pwd`
-            ./configure gnu
-        elif [ "$USE_AMBER_PREFIX" = "True" ]; then
-            mkdir $HOME/TMP/
-            yes | ./configure --prefix $HOME/TMP gnu
-        elif [ "$USE_WITH_PYTHON" = "True" ]; then
-            bash AmberTools/src/configure_python --prefix $HOME
-            export PATH=$HOME/miniconda/bin:$PATH
-            ./configure --with-python $HOME/miniconda/bin/python gnu
-        elif [ "$SKIP_PYTHON" = "True" ]; then
-            ./configure --skip-python gnu
-        elif [ "$AMBER_INSTALL_MPI" = "True" ]; then
-            yes | ./configure gnu
-            make install -j2
-            ./configure -mpi gnu # will do make install later
-        elif [ "$PYTHON_VERSION" = "3.5" ]; then
-            bash AmberTools/src/configure_python --prefix $HOME -v 3
-            export PATH=$HOME/miniconda/bin:$PATH
-            ./configure --with-python $HOME/miniconda/bin/python gnu
-        fi
+        compiler="gnu"
     fi
+    if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
+        yes | ./configure $compiler
+    elif [ "$MINICONDA_IN_AMBERHOME" = "True" ]; then
+        bash AmberTools/src/configure_python --prefix `pwd`
+        ./configure $compiler
+    elif [ "$USE_AMBER_PREFIX" = "True" ]; then
+        mkdir $HOME/TMP/
+        yes | ./configure --prefix $HOME/TMP $compiler
+    elif [ "$USE_WITH_PYTHON" = "True" ]; then
+        bash AmberTools/src/configure_python --prefix $HOME
+        export PATH=$HOME/miniconda/bin:$PATH
+        ./configure --with-python $HOME/miniconda/bin/python $compiler
+    elif [ "$SKIP_PYTHON" = "True" ]; then
+        ./configure --skip-python $compiler
+    elif [ "$AMBER_INSTALL_MPI" = "True" ]; then
+        yes | ./configure $compiler
+        make install -j2
+        ./configure -mpi $compiler # will do make install later
+    elif [ "$PYTHON_VERSION" = "3.5" ]; then
+        bash AmberTools/src/configure_python --prefix $HOME -v 3
+        export PATH=$HOME/miniconda/bin:$PATH
+        ./configure --with-python $HOME/miniconda/bin/python $compiler
+    fi
+    
     make install -j2
 }
 
