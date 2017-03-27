@@ -1,6 +1,6 @@
 #!/bin/sh
 
-version=17
+version=16
 function circleci_test(){
     # install conda
     bash $HOME/ambertools-test/amber$version/AmberTools/src/configure_python --prefix $HOME
