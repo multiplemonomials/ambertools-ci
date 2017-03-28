@@ -97,6 +97,8 @@ elif test_task == 'mmpbsa':
         'test.mmpbsa',
         'test.mm_pbsa',
     ]
+    # Perl stuff
+    test_suite.pop('tet.mm_pbsa')
 elif test_task == 'rism':
     test_suite = ['test.rism1d', 'test.rism3d.periodic']
 elif test_task == 'serial_MM':
