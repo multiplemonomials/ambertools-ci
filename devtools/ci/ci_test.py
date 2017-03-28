@@ -8,7 +8,7 @@ You need to call amber.setup_test_folders first (only do once)
 
 Then run test (anywhere)
 
-    ci_test.py
+    amber.run_tests
 
 Adjust the test by updating env TEST_TASK (please lookt at the code)
 '''
@@ -31,7 +31,6 @@ def change_folder(where):
 def cat_dif_files(amberhome):
     print('*' * 50)
     print("Oops")
-    print('( ˘︹˘ )'*6)
     print('*' * 50)
     with change_folder(amberhome):
         output = subprocess.check_output(
@@ -74,6 +73,9 @@ sanderapi_tests = [
     'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
 ]
 amberhome = os.getenv('AMBERHOME')
+if amberhome is None:
+    raise EnvironmentError("Must set AMBERHOME")
+
 amber_test_dir = amberhome + '/test'
 ambertools_test_dir = amberhome + '/AmberTools/test'
 
@@ -95,10 +97,7 @@ elif test_task == 'mmpbsa':
         'clean',
         'is_amberhome_defined',
         'test.mmpbsa',
-        'test.mm_pbsa',
     ]
-    # Perl stuff
-    test_suite.pop('tet.mm_pbsa')
 elif test_task == 'rism':
     test_suite = ['test.rism1d', 'test.rism3d.periodic']
 elif test_task == 'serial_MM':
@@ -167,7 +166,7 @@ def test_me():
 
     print('test_suite', test_suite)
     # amberXX/test/
-    if test_task in ['serial_MM', 'serial_QMMM']:
+    if test_task in ['serial_MM', 'serial_QMMM', 'serial.sander.SEBOMD']:
         print('serial MM and QMMM')
         test_folder = amber_test_dir
     # amberXX/AmberTools/test/
