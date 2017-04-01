@@ -1,7 +1,6 @@
 #!/bin/sh
 
-url=$AMBERTOOLS_RC # encrypted
-# Check: https://travis-ci.org/Amber-MD/ambertools-test/settings
+url="http://ambermd.org/downloads/ambertools-dev/AmberTools17.tar.gz"
 tarfile=`python -c "url='$url'; print(url.split('/')[-1])"`
 version='16'
 
