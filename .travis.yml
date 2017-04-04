@@ -36,9 +36,7 @@ addons:
     - clang
 
 install:
-    - if [ "$COMPILER" = "pgi" ]; then \
-          sh devtools/ci/install-pgi.sh; \
-      fi
+    - if [ "$COMPILER" = "pgi" ]; then sh devtools/ci/install-pgi.sh; fi
     - source devtools/ci/load_functions.sh
     - download_ambertools
     - install_ambertools_travis
