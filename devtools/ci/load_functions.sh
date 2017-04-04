@@ -15,12 +15,13 @@ function install_ambertools_travis(){
     # DO NOT USE IT PLEASE.
     osname=`python -c 'import sys; print(sys.platform)'`
     cd amber$version
-    if [ $osname = "darwin" ]; then
-        unset CC CXX
-        compiler="-macAccelerate clang"
-    else
-        compiler="gnu"
-    fi
+    # if [ $osname = "darwin" ]; then
+    #     unset CC CXX
+    #     compiler="-macAccelerate clang"
+    # else
+    #     compiler="gnu"
+    # fi
+    compiler=$COMPILER
     if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
         yes | ./configure $compiler
     elif [ "$MINICONDA_IN_AMBERHOME" = "True" ]; then

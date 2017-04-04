@@ -2,17 +2,18 @@ language: cpp
 
 matrix:
   include:
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_MM} # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_QMMM} # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial.sander.SEBOMD} # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=fast} # AmberTools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True TEST_TASK=python} # Ambertools/test + amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast} # Ambertools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=mmpbsa} # Ambertools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=rism} # Ambertools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 AMBER_INSTALL_MPI=True}
-     - { os: linux, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True TEST_TASK=python}
-     - { os: linux, env: PYTHON_VERSION=3.5 TEST_TASK=python} 
+     - { os: linux, env: PYTHON_VERSION=3.5 COMPILER=pgi TEST_TASK=python} 
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_MM} # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial_QMMM} # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial.sander.SEBOMD} # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=fast} # AmberTools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu MINICONDA_IN_AMBERHOME=True TEST_TASK=python} # Ambertools/test + amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu USE_AMBER_PREFIX=True TEST_TASK=fast} # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=mmpbsa} # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=rism} # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu AMBER_INSTALL_MPI=True}
+     - { os: linux, env: PYTHON_VERSION=2.7 COMPILER=gnu USE_WITH_PYTHON=True TEST_TASK=python}
+     - { os: linux, env: PYTHON_VERSION=3.5 COMPILER=gnu TEST_TASK=python} 
 
 sudo: true
 
@@ -35,6 +36,9 @@ addons:
     - clang
 
 install:
+    - if [ "$COMPILER" = "pgi" ]; then \
+          sh devtools/ci/install-pgi.sh; \
+      fi
     - source devtools/ci/load_functions.sh
     - download_ambertools
     - install_ambertools_travis
