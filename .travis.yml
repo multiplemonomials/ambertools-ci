@@ -37,6 +37,7 @@ addons:
 
 install:
     - if [ "$COMPILER" = "pgi" ]; then sh devtools/ci/install-pgi.sh; fi
+    - unset CC CXX
     - source devtools/ci/load_functions.sh
     - download_ambertools
     - install_ambertools_travis
