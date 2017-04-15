@@ -75,9 +75,6 @@ def get_tests_from_test_name(test_name, makefile_fn):
 
 
 def create_test_suite():
-    sanderapi_tests = [
-        'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
-    ]
     amberhome = os.getenv('AMBERHOME')
     if amberhome is None:
         raise EnvironmentError("Must set AMBERHOME")
@@ -106,7 +103,7 @@ def create_test_suite():
         ]
     elif test_task == 'rism':
         test_suite = ['test.rism1d', 'test.rism3d.periodic']
-    elif test_task == 'serial_MM':
+    elif test_task == 'serial.MM':
         excluded_tests = [
             'test.serial.sander.emap',
         ]
@@ -117,9 +114,11 @@ def create_test_suite():
                                               ]
         for test in excluded_tests:
             test_suite.remove(test)
-    elif test_task == 'serial_QMMM':
+    elif test_task == 'serial.QMMM':
         test_suite = get_tests_from_test_name('test.serial.QMMM',
                                               amber_test_dir + '/Makefile')
+    elif test_task == 'serial.sander.SEBOMD':
+        test_suite = ['test.serial.sander.SEBOMD']
     elif test_task == 'python':
         test_suite = [
             'test.pymsmt', 'test.pytraj', 'test.parmed', 'test.pdb4amber', 'test.sanderapi', 'test.pymsmt'
@@ -160,6 +159,9 @@ def execute(command):
 
 
 def test_me():
+    sanderapi_tests = [
+        'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
+    ]
     amberhome = os.getenv('AMBERHOME')
     if not amberhome:
         raise EnvironmentError("Must set AMBERHOME")
@@ -181,7 +183,7 @@ def test_me():
 
     print('test_suite', test_suite)
     # amberXX/test/
-    if test_task in ['serial_MM', 'serial_QMMM', 'serial.sander.SEBOMD']:
+    if test_task in ['serial.MM', 'serial.QMMM', 'serial.sander.SEBOMD']:
         print('serial MM and QMMM')
         test_folder = amber_test_dir
     # amberXX/AmberTools/test/
