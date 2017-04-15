@@ -20,6 +20,12 @@ import sys
 import subprocess
 
 
+try:
+    test_task = sys.argv[1]
+except IndexError:
+    test_task = 'fast'
+
+
 @contextmanager
 def change_folder(where):
     here = os.getcwd()
@@ -68,59 +74,61 @@ def get_tests_from_test_name(test_name, makefile_fn):
     return my_lines
 
 
-test_task = os.getenv('TEST_TASK', 'fast')
-sanderapi_tests = [
-    'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
-]
-amberhome = os.getenv('AMBERHOME')
-if amberhome is None:
-    raise EnvironmentError("Must set AMBERHOME")
+def create_test_suite():
+    sanderapi_tests = [
+        'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
+    ]
+    amberhome = os.getenv('AMBERHOME')
+    if amberhome is None:
+        raise EnvironmentError("Must set AMBERHOME")
+    
+    amber_test_dir = amberhome + '/test'
 
-amber_test_dir = amberhome + '/test'
-ambertools_test_dir = amberhome + '/AmberTools/test'
+    if test_task == 'fast':
+        test_suite = [
+            'test.cpptraj', 'test.pytraj', 'test.parmed', 'test.pdb4amber',
+            'test.leap', 'test.antechamber', 'test.unitcell', 'test.reduce',
+            'test.nab', 'test.mdgx', 'test.resp', 'test.sqm', 'test.gbnsr6',
+            'test.elsize', 'test.paramfit', 'test.FEW', 'test.cphstats',
+            'test.cpinutil'
+        ]
+    elif test_task == 'exp':
+        test_suite = [
+            # 'test.pytraj', 'test.pdb4amber',
+            'test.pytraj',
+        ]
+    elif test_task == 'mmpbsa':
+        test_suite = [
+            'clean',
+            'is_amberhome_defined',
+            'test.mmpbsa',
+            'test.mm_pbsa',
+        ]
+    elif test_task == 'rism':
+        test_suite = ['test.rism1d', 'test.rism3d.periodic']
+    elif test_task == 'serial_MM':
+        excluded_tests = [
+            'test.serial.sander.emap',
+        ]
+        print('excluded_tests', excluded_tests)
+        test_suite = get_tests_from_test_name('test.serial.sander.MM',
+                                              amber_test_dir + '/Makefile') + [
+                                                  'test.nmode',
+                                              ]
+        for test in excluded_tests:
+            test_suite.remove(test)
+    elif test_task == 'serial_QMMM':
+        test_suite = get_tests_from_test_name('test.serial.QMMM',
+                                              amber_test_dir + '/Makefile')
+    elif test_task == 'python':
+        test_suite = [
+            'test.pymsmt', 'test.pytraj', 'test.parmed', 'test.pdb4amber', 'test.sanderapi', 'test.pymsmt'
+        ]
+        # pymsmt have not passed its tests yet.
+    else:
+        test_suite = [test_task]
 
-if test_task == 'fast':
-    test_suite = [
-        'test.cpptraj', 'test.pytraj', 'test.parmed', 'test.pdb4amber',
-        'test.leap', 'test.antechamber', 'test.unitcell', 'test.reduce',
-        'test.nab', 'test.mdgx', 'test.resp', 'test.sqm', 'test.gbnsr6',
-        'test.elsize', 'test.paramfit', 'test.FEW', 'test.cphstats',
-        'test.cpinutil'
-    ]
-elif test_task == 'exp':
-    test_suite = [
-        # 'test.pytraj', 'test.pdb4amber',
-        'test.pytraj',
-    ]
-elif test_task == 'mmpbsa':
-    test_suite = [
-        'clean',
-        'is_amberhome_defined',
-        'test.mmpbsa',
-    ]
-elif test_task == 'rism':
-    test_suite = ['test.rism1d', 'test.rism3d.periodic']
-elif test_task == 'serial_MM':
-    excluded_tests = [
-        'test.serial.sander.emap',
-    ]
-    print('excluded_tests', excluded_tests)
-    test_suite = get_tests_from_test_name('test.serial.sander.MM',
-                                          amber_test_dir + '/Makefile') + [
-                                              'test.nmode',
-                                          ]
-    for test in excluded_tests:
-        test_suite.remove(test)
-elif test_task == 'serial_QMMM':
-    test_suite = get_tests_from_test_name('test.serial.QMMM',
-                                          amber_test_dir + '/Makefile')
-elif test_task == 'python':
-    test_suite = [
-        'test.pytraj', 'test.parmed', 'test.pdb4amber', 'test.sanderapi'
-    ]
-    # pymsmt have not passed its tests yet.
-else:
-    test_suite = ['test.' + test_task]
+    return test_suite
 
 
 def execute(command):
@@ -152,9 +160,16 @@ def execute(command):
 
 
 def test_me():
+    amberhome = os.getenv('AMBERHOME')
+    if not amberhome:
+        raise EnvironmentError("Must set AMBERHOME")
+    ambertools_test_dir = amberhome + '/AmberTools/test'
+    amber_test_dir = amberhome + '/test'
+
+
     ERRORS = []
     ALL_OUTPUTS = []
-    amberhome = os.getenv('AMBERHOME')
+    test_suite = create_test_suite()
 
     def run_all(test_suite):
         for me in test_suite:
