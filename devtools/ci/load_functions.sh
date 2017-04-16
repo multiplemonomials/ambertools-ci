@@ -39,7 +39,7 @@ function install_ambertools_travis(){
         yes | ./configure $compiler
         make install -j2
         ./configure -mpi $compiler # will do make install later
-    elif [ "$PYTHON_VERSION" = "3.5" ]; then
+    elif [ "$PYTHON_VERSION" = "3.6" ]; then
         bash AmberTools/src/configure_python --prefix $HOME -v 3
         export PATH=$HOME/miniconda/bin:$PATH
         ./configure --with-python $HOME/miniconda/bin/python $compiler
