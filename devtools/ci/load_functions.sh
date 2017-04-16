@@ -51,7 +51,7 @@ function install_ambertools_travis(){
 function install_ambertools_circleci(){
     mkdir $HOME/TMP
     cd $HOME/TMP
-    python $HOME/ambertools-test/amber$version/AmberTools/src/conda_tools/build_all.py --exclude-osx --sudo --date
+    python $HOME/ambertools-ci/amber$version/AmberTools/src/conda_tools/build_all.py --exclude-osx --sudo --date
 }
 
 function run_long_test_simplified(){
