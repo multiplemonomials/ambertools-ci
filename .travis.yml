@@ -6,7 +6,7 @@ matrix:
      - { os: osx, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True TEST_TASK=python}
      - { os: osx, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=python}
      - { os: osx, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True TEST_TASK=python}
-     - { os: osx, env: PYTHON_VERSION=3.5 TEST_TASK=python} 
+     - { os: osx, env: PYTHON_VERSION=3.6 TEST_TASK=python} 
 
 sudo: true
 

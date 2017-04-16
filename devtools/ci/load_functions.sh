@@ -58,7 +58,7 @@ function run_long_test_simplified(){
     # not running all tests, skip any long long test.
     cd $AMBERHOME/AmberTools/test
     # python $TRAVIS_BUILD_DIR/devtools/ci/ci_test.py
-    python $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda_tools/amber.run_tests
+    python $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda_tools/amber.run_tests $TEST_TASK
 }
 
 function circleci_test(){
