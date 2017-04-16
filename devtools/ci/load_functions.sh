@@ -51,7 +51,7 @@ function install_ambertools_travis(){
 function install_ambertools_circleci(){
     mkdir $HOME/TMP
     cd $HOME/TMP
-    python $HOME/ambertools-test/amber$version/AmberTools/src/conda_tools/build_all.py --exclude-osx --sudo
+    python $HOME/ambertools-ci/amber$version/AmberTools/src/conda_tools/build_all.py --exclude-osx --sudo
 }
 
 function run_long_test_simplified(){
@@ -63,10 +63,10 @@ function run_long_test_simplified(){
 
 function circleci_test(){
     # install conda
-    bash $HOME/ambertools-test/amber$version/AmberTools/src/configure_python --prefix $HOME
+    bash $HOME/ambertools-ci/amber$version/AmberTools/src/configure_python --prefix $HOME
     export PATH=$HOME/miniconda/bin:$PATH
     for tarfile in `ls $HOME/TMP/amber-conda-bld/linux-64/ambertools-*.tar.bz2`; do
-        python $HOME/ambertools-test/amber$version/AmberTools/src/conda_tools/test_multiple_pythons.py $tarfile
+        python $HOME/ambertools-ci/amber$version/AmberTools/src/conda_tools/test_multiple_pythons.py $tarfile
     done
 }
 
