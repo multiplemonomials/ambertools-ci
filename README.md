@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Amber-MD/ambertools-test.svg?branch=nightly)](https://travis-ci.org/Amber-MD/ambertools-test)
+[![Build Status](https://travis-ci.org/Amber-MD/ambertools-ci.svg?branch=nightly)](https://travis-ci.org/Amber-MD/ambertools-ci)
 [![CircleCI](https://circleci.com/gh/Amber-MD/ambertools-test/tree/nightly.svg?style=svg)](https://circleci.com/gh/Amber-MD/ambertools-test/tree/nightly)
 
 # ambertools-test
