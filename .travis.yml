@@ -12,7 +12,7 @@ matrix:
      - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=rism} # Ambertools/test
      - { os: linux, env: PYTHON_VERSION=2.7 AMBER_INSTALL_MPI=True}
      - { os: linux, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True TEST_TASK=python}
-     - { os: linux, env: PYTHON_VERSION=3.5 TEST_TASK=python} 
+     - { os: linux, env: PYTHON_VERSION=3.6 TEST_TASK=fast} 
 
 sudo: true
 
