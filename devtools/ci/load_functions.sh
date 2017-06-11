@@ -1,6 +1,6 @@
 #!/bin/sh
 
-url="http://ambermd.org/downloads/ambertools-dev/AmberTools17.tar.gz"
+url="http://ambermd.org/downloads/ambertools-dev/AmberTools18.tar.gz"
 tarfile=`python -c "url='$url'; print(url.split('/')[-1])"`
 version='16'
 
