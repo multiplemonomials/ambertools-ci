@@ -3,6 +3,7 @@
 url="http://ambermd.org/downloads/ambertools-dev/AmberTools18.tar.gz"
 tarfile=`python -c "url='$url'; print(url.split('/')[-1])"`
 version='16'
+EXCLUDED_TESTS=test.parmed
 
 function download_ambertools(){
     wget $url -O $tarfile
@@ -57,7 +58,7 @@ function install_ambertools_circleci(){
 function run_long_test_simplified(){
     # not running all tests, skip any long long test.
     cd $AMBERHOME/AmberTools/test
-    python $TRAVIS_BUILD_DIR/devtools/ci/ci_test.py $TEST_TASK
+    python $TRAVIS_BUILD_DIR/devtools/ci/ci_test.py -t $TEST_TASK -x "$EXCLUDED_TESTS"
     # python $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda_tools/amber.run_tests $TEST_TASK
 }
 

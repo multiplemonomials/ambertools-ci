@@ -74,7 +74,7 @@ def get_tests_from_test_name(test_name, makefile_fn):
     return my_lines
 
 
-def create_test_suite():
+def create_test_suite(test_task):
     amberhome = os.getenv('AMBERHOME')
     if amberhome is None:
         raise EnvironmentError("Must set AMBERHOME")
@@ -158,7 +158,9 @@ def execute(command):
     return output
 
 
-def test_me():
+def test_me(opt):
+    # type opt: ArgumentParser
+    print('test tast', opt.task)
     sanderapi_tests = [
         'test.parm7', 'Fortran', 'Fortran2', 'C', 'CPP', 'Python', 'clean'
     ]
@@ -168,10 +170,15 @@ def test_me():
     ambertools_test_dir = amberhome + '/AmberTools/test'
     amber_test_dir = amberhome + '/test'
 
-
     ERRORS = []
     ALL_OUTPUTS = []
-    test_suite = create_test_suite()
+    test_suite = create_test_suite(opt.task)
+
+    for test in opt.exclude:
+        try:
+            test_suite.remove(test)
+        except ValueError:
+            pass
 
     def run_all(test_suite):
         for me in test_suite:
@@ -181,7 +188,7 @@ def test_me():
                     'No rule to make target' in output):
                 ERRORS.append(output)
 
-    print('test_suite', test_suite)
+    print('test_suite', sorted(test_suite))
     # amberXX/test/
     if test_task in ['serial.MM', 'serial.QMMM', 'serial.sander.SEBOMD']:
         print('serial MM and QMMM')
@@ -225,6 +232,21 @@ def test_me():
     assert len(ERRORS) == 0
 
 
+def main(args=None):
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t', '--task',
+            default='fast',
+            help='test task')
+    parser.add_argument('-x', '--exclude',
+            default=[],
+            help='Exlude tests')
+    opt = parser.parse_args(args)
+    if opt.exclude:
+        # "test.parmed, test.pytraj"
+        opt.exclude = opt.exclude.split(',')
+    test_me(opt)
+
+
 if __name__ == '__main__':
-    # cat_dif_files(os.environ.get('AMBERHOME'))
-    test_me()
+    main()
