@@ -2,17 +2,17 @@ language: cpp
 
 matrix:
   include:
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial.MM} # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial.QMMM} # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=serial.sander.SEBOMD} # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=fast} # AmberTools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True TEST_TASK=python} # Ambertools/test + amber17/test
-     # - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast} # Ambertools/test # not sure why failed
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=mmpbsa} # Ambertools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=rism} # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=serial.MM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=fast MINICONDA_WILL_BE_INSTALLED=True } # AmberTools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=python MINICONDA_IN_AMBERHOME=True } # Ambertools/test + amber17/test
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=mmpbsa MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=rism MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
      - { os: linux, env: PYTHON_VERSION=2.7 AMBER_INSTALL_MPI=True}
-     - { os: linux, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True TEST_TASK=python}
+     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=python USE_WITH_PYTHON=True }
      - { os: linux, env: PYTHON_VERSION=3.6 TEST_TASK=fast} 
+     # - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast} # Ambertools/test # not sure why failed
 
 sudo: true
 
