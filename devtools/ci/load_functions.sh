@@ -3,6 +3,7 @@
 url="http://ambermd.org/downloads/ambertools-dev/AmberTools18.tar.gz"
 tarfile=`python -c "url='$url'; print(url.split('/')[-1])"`
 version='16'
+EXCLUDED_TESTS=test.parmed
 
 function download_ambertools(){
     wget $url -O $tarfile
@@ -51,23 +52,14 @@ function install_ambertools_travis(){
 function install_ambertools_circleci(){
     mkdir $HOME/TMP
     cd $HOME/TMP
-    python $HOME/ambertools-ci/amber$version/AmberTools/src/conda_tools/build_all.py --exclude-osx --sudo
+    python $HOME/ambertools-ci/amber$version/AmberTools/src/ambertools-binary-build/conda_tools/build_all.py --exclude-osx --sudo --date
 }
 
 function run_long_test_simplified(){
     # not running all tests, skip any long long test.
     cd $AMBERHOME/AmberTools/test
-    # python $TRAVIS_BUILD_DIR/devtools/ci/ci_test.py
-    python $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda_tools/amber.run_tests $TEST_TASK
-}
-
-function circleci_test(){
-    # install conda
-    bash $HOME/ambertools-ci/amber$version/AmberTools/src/configure_python --prefix $HOME
-    export PATH=$HOME/miniconda/bin:$PATH
-    for tarfile in `ls $HOME/TMP/amber-conda-bld/linux-64/ambertools-*.tar.bz2`; do
-        python $HOME/ambertools-ci/amber$version/AmberTools/src/conda_tools/test_multiple_pythons.py $tarfile
-    done
+    python $HOME/amber.run_tests -t $TEST_TASK -x $HOME/EXCLUDED_TESTS
+    # python $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda_tools/amber.run_tests $TEST_TASK
 }
 
 function run_tests(){

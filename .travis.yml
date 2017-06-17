@@ -4,9 +4,9 @@ matrix:
   include:
      - { os: osx, env: PYTHON_VERSION=2.7 MINICONDA_WILL_BE_INSTALLED=True TEST_TASK=fast}
      - { os: osx, env: PYTHON_VERSION=2.7 MINICONDA_IN_AMBERHOME=True TEST_TASK=fast}
-     - { os: osx, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast}
      - { os: osx, env: PYTHON_VERSION=2.7 USE_WITH_PYTHON=True TEST_TASK=fast}
-     - { os: osx, env: PYTHON_VERSION=3.6 TEST_TASK=fast} 
+     - { os: osx, env: PYTHON_VERSION=3.6 TEST_TASK=fast}
+     - { os: osx, env: PYTHON_VERSION=3.6 TEST_TASK=test.ambermini}
 
 sudo: true
 
@@ -34,7 +34,9 @@ before_install:
     fi
 
 install:
-    - source devtools/ci/load_functions.sh
+    - cp EXCLUDED_TESTS $HOME/
+    - git clone https://github.com/Amber-MD/ambertools-binary-build && cp ambertools-binary-build/conda_tools/amber.run_tests $HOME/
+    - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
     - download_ambertools
     - install_ambertools_travis
 
@@ -49,5 +51,5 @@ notifications:
     recipients:
       - nhai.qn@gmail.com
     on_success: never # default: change
-    on_failure: never # default: always
+    on_failure: always # default: always
   
