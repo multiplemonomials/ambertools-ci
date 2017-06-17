@@ -35,8 +35,9 @@ addons:
     - clang
 
 install:
+    - cp EXCLUDED_TESTS $HOME/
     - git clone https://github.com/Amber-MD/ambertools-binary-build && cp ambertools-binary-build/conda_tools/amber.run_tests $HOME/
-    - source devtools/ci/load_functions.sh
+    - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
     - download_ambertools
     - install_ambertools_travis
 
