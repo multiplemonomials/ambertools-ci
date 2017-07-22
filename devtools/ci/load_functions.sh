@@ -4,6 +4,7 @@ url="http://ambermd.org/downloads/ambertools-dev/AmberTools18.tar.gz"
 tarfile=`python -c "url='$url'; print(url.split('/')[-1])"`
 version='16'
 EXCLUDED_TESTS=test.parmed
+AMBERTOOLS_VERSION=18.0
 
 function download_ambertools(){
     wget $url -O $tarfile
@@ -52,7 +53,8 @@ function install_ambertools_travis(){
 function install_ambertools_circleci(){
     mkdir $HOME/TMP
     cd $HOME/TMP
-    python $HOME/ambertools-ci/amber$version/AmberTools/src/ambertools-binary-build/conda_tools/build_all.py --exclude-osx --sudo --date
+    python $HOME/ambertools-ci/amber$version/AmberTools/src/ambertools-binary-build/build_all.py --exclude-osx --sudo --date \
+        -v $AMBERTOOLS_VERSION
 }
 
 function run_long_test_simplified(){
