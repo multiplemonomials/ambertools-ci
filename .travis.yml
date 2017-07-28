@@ -32,6 +32,7 @@ addons:
     - libopenmpi-dev
     - xutils-dev
     - clang
+    - python-tk
 
 install:
     - sudo add-apt-repository -y "ppa:george-edison55/precise-backports" # get CMake 3
