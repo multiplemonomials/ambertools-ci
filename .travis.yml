@@ -34,9 +34,9 @@ addons:
     - clang
 
 install:
-	- sudo add-apt-repository "ppa:george-edison55/precise-backports" # get CMake 3
-	- sudo apt-get update
-	- sudo apt-get upgrade cmake
+    - sudo add-apt-repository "ppa:george-edison55/precise-backports" # get CMake 3
+    - sudo apt-get update
+    - sudo apt-get upgrade cmake
     - cp EXCLUDED_TESTS $HOME/
     - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
     - download_ambertools
