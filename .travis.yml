@@ -2,16 +2,16 @@ language: cpp
 
 matrix:
   include:
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=serial.MM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=fast MINICONDA_WILL_BE_INSTALLED=True } # AmberTools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=python MINICONDA_IN_AMBERHOME=True } # Ambertools/test + amber17/test
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=mmpbsa MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=rism MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
-       # - { os: linux, env: PYTHON_VERSION=2.7 AMBER_INSTALL_MPI=True}
-     - { os: linux, env: PYTHON_VERSION=2.7 TEST_TASK=python USE_WITH_PYTHON=True }
-     - { os: linux, env: PYTHON_VERSION=3.6 TEST_TASK=fast} 
+     - { os: linux, env: TEST_TASK=serial.MM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+     - { os: linux, env: TEST_TASK=fast MINICONDA_WILL_BE_INSTALLED=True } # AmberTools/test
+     - { os: linux, env: TEST_TASK=python} # Ambertools/test + amber17/test
+     - { os: linux, env: TEST_TASK=mmpbsa MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
+     - { os: linux, env: TEST_TASK=rism MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
+       # - { os: linux, env: AMBER_INSTALL_MPI=True}
+     - { os: linux, env: TEST_TASK=python USE_WITH_PYTHON=True }
+     - { os: linux, env: TEST_TASK=fast} 
      # - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast} # Ambertools/test # not sure why failed
 
 sudo: true
@@ -36,7 +36,6 @@ addons:
 
 install:
     - cp EXCLUDED_TESTS $HOME/
-    - git clone https://github.com/Amber-MD/ambertools-binary-build && cp ambertools-binary-build/conda_tools/amber.run_tests $HOME/
     - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
     - download_ambertools
     - install_ambertools_travis
