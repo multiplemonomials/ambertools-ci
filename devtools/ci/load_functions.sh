@@ -28,7 +28,7 @@ function install_ambertools_travis(){
     else
         compiler="gnu"
     fi
-    if [ "$MINICONDA_WILL_BE_INSTALLED" == "True" ]; then
+    if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
         miniconda_opt="-DUSE_MINICONDA=TRUE"
     elif [ "$AMBER_INSTALL_MPI" = "True" ]; then
         mpi_opt="-DMPI=TRUE"

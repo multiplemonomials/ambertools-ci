@@ -3,4 +3,4 @@ numpy
 scipy
 matplotlib
 cython <= 0.26
-Tkinter
+tkinter

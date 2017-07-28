@@ -2,7 +2,7 @@ language: cpp
 
 matrix:
   include:
-     - { os: linux, env: TEST_TASK=serial.MM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.MM MINICONDA_WILL_BE_INSTALLED=False } # amber17/test
     # - { os: linux, env: TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
     # - { os: linux, env: TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
     # - { os: linux, env: TEST_TASK=fast MINICONDA_WILL_BE_INSTALLED=True } # AmberTools/test
