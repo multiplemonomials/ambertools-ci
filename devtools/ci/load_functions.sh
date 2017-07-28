@@ -14,7 +14,7 @@ function download_ambertools(){
 function install_ambertools_travis(){
     set -ex
     
-	mkdir $HOME/TMP/build
+	mkdir -p $HOME/TMP/build
     cd $HOME/TMP/build
 	
     osname=`python -c 'import sys; print(sys.platform)'`	
@@ -35,7 +35,7 @@ function install_ambertools_travis(){
 }
 
 function install_ambertools_circleci(){
-    mkdir $HOME/TMP/build
+    mkdir -p $HOME/TMP/build
     cd $HOME/TMP/build
     cmake $HOME/ambertools-ci/amber$version -DCMAKE_INSTALL_PREFIX=$HOME/TMP
 	make -j2
