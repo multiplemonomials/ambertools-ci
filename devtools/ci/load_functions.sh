@@ -7,8 +7,12 @@ EXCLUDED_TESTS=test.parmed
 AMBERTOOLS_VERSION=18.0
 
 function download_ambertools(){
+	cd $HOME
     wget $url -O $tarfile
     tar -xf $tarfile
+	
+	echo "Contents of $HOME: "
+	ls
 }
 
 function install_ambertools_travis(){
@@ -37,12 +41,13 @@ function install_ambertools_travis(){
 function install_ambertools_circleci(){
     mkdir -p $HOME/TMP/build
     cd $HOME/TMP/build
-    cmake $HOME/ambertools-ci/amber$version -DCMAKE_INSTALL_PREFIX=$HOME/TMP
+    cmake $HOME/amber$version -DCMAKE_INSTALL_PREFIX=$HOME/TMP
 	make -j2
 	make install
 }
 
 function run_long_test_simplified(){
+    source $HOME/TMP/amber.sh
     # not running all tests, skip any long long test.
     cd $AMBERHOME/AmberTools/test
     python $HOME/amber.run_tests -t $TEST_TASK -x $HOME/EXCLUDED_TESTS
