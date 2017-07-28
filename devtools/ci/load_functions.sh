@@ -34,7 +34,7 @@ function install_ambertools_travis(){
         mpi_opt="-DMPI=TRUE"
     fi
 	
-    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/ambertools-ci/amber$version 
+    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version 
     make install -j2
 }
 
