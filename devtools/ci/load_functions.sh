@@ -56,7 +56,6 @@ function run_tests(){
     ls $HOME/TMP/
     ls $HOME/TMP/*/
    
-    fi
     if [ "$TEST_TASK" != "" ]; then
         run_long_test_simplified
     else
