@@ -3,17 +3,16 @@ language: cpp
 matrix:
   include:
      - { os: linux, env: TEST_TASK=serial.MM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
-     - { os: linux, env: TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
-     - { os: linux, env: TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
-     - { os: linux, env: TEST_TASK=fast MINICONDA_WILL_BE_INSTALLED=True } # AmberTools/test
-     - { os: linux, env: TEST_TASK=python} # Ambertools/test + amber17/test
-     - { os: linux, env: TEST_TASK=mmpbsa MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
-     - { os: linux, env: TEST_TASK=rism MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
+    # - { os: linux, env: TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+    # - { os: linux, env: TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
+    # - { os: linux, env: TEST_TASK=fast MINICONDA_WILL_BE_INSTALLED=True } # AmberTools/test
+    # - { os: linux, env: TEST_TASK=python} # Ambertools/test + amber17/test
+    # - { os: linux, env: TEST_TASK=mmpbsa MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
+    # - { os: linux, env: TEST_TASK=rism MINICONDA_WILL_BE_INSTALLED=True } # Ambertools/test
        # - { os: linux, env: AMBER_INSTALL_MPI=True}
-     - { os: linux, env: TEST_TASK=python USE_WITH_PYTHON=True }
-     - { os: linux, env: TEST_TASK=fast} 
+    # - { os: linux, env: TEST_TASK=python USE_WITH_PYTHON=True }
+    # - { os: linux, env: TEST_TASK=fast} 
      # - { os: linux, env: PYTHON_VERSION=2.7 USE_AMBER_PREFIX=True TEST_TASK=fast} # Ambertools/test # not sure why failed
-
 sudo: true
 
 addons:
@@ -35,6 +34,9 @@ addons:
     - clang
 
 install:
+	- sudo add-apt-repository "ppa:george-edison55/precise-backports" # get CMake 3
+	- sudo apt-get update
+	- sudo apt-get upgrade cmake
     - cp EXCLUDED_TESTS $HOME/
     - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
     - download_ambertools
