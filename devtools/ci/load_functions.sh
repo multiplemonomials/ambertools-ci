@@ -35,7 +35,7 @@ function install_ambertools_travis(){
     fi
 	
 	# we must run CMake twice because of the Fortran-compiler-version-not-being-autodetected bug in CMake 3.2
-    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version 
+    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version || echo "this is supposed to fail"
 	cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version 
 
     make install -j2
