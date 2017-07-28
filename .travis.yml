@@ -36,8 +36,8 @@ addons:
 install:
     - sudo add-apt-repository -y "ppa:george-edison55/precise-backports" # get CMake 3
     - sudo apt-get update
-    #- sudo apt-get remove emacs23-common # for some reason, this is incompatible with 
     - sudo apt-get -y install --only-upgrade cmake cmake-data
+    - pip install -r requirements.txt
     - cp EXCLUDED_TESTS $HOME/
     - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
     - download_ambertools

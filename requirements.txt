@@ -1,0 +1,6 @@
+# Python packages required by Amber
+numpy
+scipy
+matplotlib
+cython <= 0.26
+Tkinter
