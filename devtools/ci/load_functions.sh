@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-url="https://app.box.com/shared/static/yyizddvjrpchrhrnp55mhnnlyfd5xn06.bz2"
+url="https://app.box.com/shared/static/x7wumue89a1sn43jz4gth67hcsb0g2go.bz2"
 tarfile=AmberTools.tar.bz2
 version='16'
 EXCLUDED_TESTS=test.parmed
@@ -34,7 +34,10 @@ function install_ambertools_travis(){
         mpi_opt="-DMPI=TRUE"
     fi
 	
+	# we must run CMake twice because of the Fortran-compiler-version-not-being-autodetected bug in CMake 3.2
     cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version 
+	cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version 
+
     make install -j2
 }
 
