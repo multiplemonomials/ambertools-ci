@@ -28,10 +28,10 @@ function install_ambertools_travis()
 	# clang seems to break when GCC 5's headers are installed
 	# in fact, you could say that it takes a header..... ba dum crash
 	# anyway, we must only install the GCC 5 apt packages if we aren's using clang
-	if [ "$COMPILER" = "gcc" ]
+	if [ "$COMPILER" = "gcc" ]; then
 		CMAKE_OPTS="$CMAKE_OPTS -DCMAKE_C_COMPILER=gcc-5 -DCMAKE_CXX_COMPILER=g++-5 -DCMAKE_Fortran_COMPILER=gfortran-5"
 		sudo apt-get -y install gcc-5 g++-5 gfortran-5
-	elif [ "$COMPILER" = "clang" ]
+	elif [ "$COMPILER" = "clang" ]; then
 		# must set CMAKE_Fortran_COMPILER_VERSION due to CMake bug #15372, whch was not fixed until CMake 3.3
 		CMAKE_OPTS="$CMAKE_OPTS -DCOMPILER=clang -DCMAKE_Fortran_COMPILER_VERSION=4.6.4"
 	fi
