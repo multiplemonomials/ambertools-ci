@@ -3,7 +3,7 @@ language: cpp
 matrix:
   include:
      - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="-DCMAKE_C_COMPILER=gcc-5 -DCMAKE_CXX_COMPILER=g++-5 -DCMAKE_Fortran_COMPILER=gfortran-5" } # amber17/test
-     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="-DCOMPILER=clang" } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="-DCOMPILER=clang -DCMAKE_Fortran_COMPILER_VERSION=4.6.4" } # amber17/test
 
     # - { os: linux, env: TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
     # - { os: linux, env: TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
@@ -24,6 +24,7 @@ addons:
     packages:
     - gcc-5
     - g++-5
+    - gfortran-5
     - gfortran
     - unzip
     - csh
