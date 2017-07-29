@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 url="https://app.box.com/shared/static/9lgbqvjrxhls1p9avhi718vn8vfrfurq.bz2"
 tarfile=AmberTools.tar.bz2
@@ -15,37 +15,26 @@ function download_ambertools(){
 	ls
 }
 
-function install_ambertools_travis(){
-    set -ex
+function build_ambertools(){
     
 	mkdir -p $HOME/TMP/build
     cd $HOME/TMP/build
-	
-    osname=`python -c 'import sys; print(sys.platform)'`	
-	# build CMake command line from options
-    if [ $osname = "darwin" ]; then
-        compiler="clang"
-    else
-        compiler="gnu"
-    fi
-    if [ "$MINICONDA_WILL_BE_INSTALLED" = "True" ]; then
-        miniconda_opt="-DUSE_MINICONDA=TRUE"
-    elif [ "$AMBER_INSTALL_MPI" = "True" ]; then
-        mpi_opt="-DMPI=TRUE"
-    fi
-	
 	# we must run CMake twice because of the Fortran-compiler-version-not-being-autodetected bug in CMake 3.2
-    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version || echo "this is supposed to fail"
-	cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP -DCOMPILER=$compiler $miniconda_opt $mpi_opt $HOME/amber$version 
+    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP/install -DUNUSED_WARNINGS=FALSE -DUNINITIALIZED_WARNINGS=FALSE $CMAKE_OPTS $HOME/amber$version || echo "************************\nthis was supposed to fail\n************************"
+	cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP/install -DUNUSED_WARNINGS=FALSE -DUNINITIALIZED_WARNINGS=FALSE $CMAKE_OPTS $HOME/amber$version 
 
-    make install -j2
+    make -j2
+}
+
+function install_ambertools_travis(){
+    set -ex
+
+	build_ambertools
+	make -j2 install
 }
 
 function install_ambertools_circleci(){
-    mkdir -p $HOME/TMP/build
-    cd $HOME/TMP/build
-    cmake $HOME/amber$version -DCMAKE_INSTALL_PREFIX=$HOME/TMP
-	make -j2
+    build_ambertools
 	make install
 }
 
