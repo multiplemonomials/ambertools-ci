@@ -2,8 +2,8 @@ language: cpp
 
 matrix:
   include:
-     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" } # amber17/test
-     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" COMPILER="gcc" } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" COMPILER="clang"} # amber17/test
 
     # - { os: linux, env: TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
     # - { os: linux, env: TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test

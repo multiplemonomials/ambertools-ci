@@ -17,7 +17,7 @@ function build_ambertools(){
 	mkdir -p $HOME/TMP/build
     cd $HOME/TMP/build
 	# we must run CMake twice because of the Fortran-compiler-version-not-being-autodetected bug in CMake 3.2
-    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP/install -DUNUSED_WARNINGS=FALSE -DUNINITIALIZED_WARNINGS=FALSE $CMAKE_OPTS $HOME/amber$version || echo "************************\nthis was supposed to fail\n************************"
+    cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP/install -DUNUSED_WARNINGS=FALSE -DUNINITIALIZED_WARNINGS=FALSE $CMAKE_OPTS $HOME/amber$version || echo "************************ this was supposed to fail ************************"
 	cmake -DCMAKE_INSTALL_PREFIX=$HOME/TMP/install -DUNUSED_WARNINGS=FALSE -DUNINITIALIZED_WARNINGS=FALSE $CMAKE_OPTS $HOME/amber$version 
 
     make -j2
