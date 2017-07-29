@@ -1,6 +1,6 @@
 #!/bin/bash
 
-url="https://app.box.com/shared/static/9lgbqvjrxhls1p9avhi718vn8vfrfurq.bz2"
+url="https://app.box.com/shared/static/epq4p9l3cz79hkzcvj08kovi7z9r2ok6.bz2"
 tarfile=AmberTools.tar.bz2
 version='16'
 EXCLUDED_TESTS=test.parmed
@@ -10,9 +10,6 @@ function download_ambertools(){
 	cd $HOME
     wget $url -O $tarfile
     tar -xf $tarfile
-	
-	echo "Contents of $HOME: "
-	ls
 }
 
 function build_ambertools(){
@@ -26,7 +23,19 @@ function build_ambertools(){
     make -j2
 }
 
-function install_ambertools_travis(){
+function install_ambertools_travis()
+{
+	# clang seems to break when GCC 5's headers are installed
+	# in fact, you could say that it takes a header..... ba dum crash
+	# anyway, we must only install the GCC 5 apt packages if we aren's using clang
+	if [ "$COMPILER" = "gcc" ]
+		CMAKE_OPTS="$CMAKE_OPTS -DCMAKE_C_COMPILER=gcc-5 -DCMAKE_CXX_COMPILER=g++-5 -DCMAKE_Fortran_COMPILER=gfortran-5"
+		sudo apt-get -y install gcc-5 g++-5 gfortran-5
+	elif [ "$COMPILER" = "clang" ]
+		# must set CMAKE_Fortran_COMPILER_VERSION due to CMake bug #15372, whch was not fixed until CMake 3.3
+		CMAKE_OPTS="$CMAKE_OPTS -DCOMPILER=clang -DCMAKE_Fortran_COMPILER_VERSION=4.6.4"
+	fi
+	
     set -ex
 
 	build_ambertools
