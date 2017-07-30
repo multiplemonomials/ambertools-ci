@@ -48,17 +48,17 @@ function install_ambertools_circleci(){
 }
 
 function run_long_test_simplified(){
-    source $HOME/TMP/amber.sh
+    source $HOME/TMP/install/amber.sh
     # not running all tests, skip any long long test.
-    cd $AMBERHOME/AmberTools/test
+    cd $HOME/amber$version/AmberTools/test
     python $HOME/amber.run_tests -t $TEST_TASK -x $HOME/EXCLUDED_TESTS
     # python $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda_tools/amber.run_tests $TEST_TASK
 }
 
 function run_tests(){
     set -ex
-    source $HOME/TMP/amber.sh
-    ls $AMBERHOME
+    source $HOME/TMP/install/amber.sh
+    ls $HOME/TMP/install
     ls $HOME/TMP/
     ls $HOME/TMP/*/
    
@@ -66,10 +66,10 @@ function run_tests(){
         run_long_test_simplified
     else
         if [ "$SKIP_PYTHON" != "True" ]; then
-            cat $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
+            cat $HOME/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
             bash $HOME/run_test.sh
         else
-            (cd $AMBERHOME/AmberTools/test && make test.ambermini)
+            (cd $HOME/amber$version/AmberTools/test && make test.ambermini)
         fi
     fi
 }
