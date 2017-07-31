@@ -3,7 +3,9 @@ language: cpp
 matrix:
   include:
      - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" COMPILER="gcc" } # amber17/test
-     - { os: osx, env: TEST_TASK=serial.MM CMAKE_OPTS="" COMPILER="clang"} # amber17/test
+     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="-DMPI=TRUE" COMPILER="gcc" } # amber17/test
+     
+    # - { os: osx, env: TEST_TASK=serial.MM CMAKE_OPTS="" COMPILER="clang"} # amber17/test
 
     # - { os: linux, env: TEST_TASK=serial.QMMM MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
     # - { os: linux, env: TEST_TASK=serial.sander.SEBOMD MINICONDA_WILL_BE_INSTALLED=True } # amber17/test
@@ -39,6 +41,7 @@ install:
     - sudo apt-get update
     - sudo apt-get -y install --only-upgrade cmake cmake-data
     - pip install --user -r requirements.txt
+    - git clone https://github.com/Amber-MD/ambertools-binary-build && cp ambertools-binary-build/conda_tools/amber.run_tests $HOME/
     - cp EXCLUDED_TESTS $HOME/
     - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
     - download_ambertools
