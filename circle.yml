@@ -4,7 +4,7 @@ machine:
 
 dependencies:
   override:
-      - docker pull ubuntu
+      - docker pull ubuntu:17.10
 
 test:
   override:
