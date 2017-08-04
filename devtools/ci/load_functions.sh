@@ -1,6 +1,6 @@
 #!/bin/bash
 
-url="https://app.box.com/shared/static/epq4p9l3cz79hkzcvj08kovi7z9r2ok6.bz2"
+url="https://app.box.com/shared/static/nxmn9q3yqmbiuv03x5bo7mvybdanhd7z.bz2"
 tarfile=AmberTools.tar.bz2
 version='16'
 EXCLUDED_TESTS=test.parmed
