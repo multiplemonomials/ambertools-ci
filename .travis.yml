@@ -2,8 +2,8 @@ language: cpp
 
 matrix:
   include:
-     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" COMPILER="gcc" } # amber17/test
-     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="-DMPI=TRUE" COMPILER="gcc" } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" MPI=true COMPILER="gcc" } # amber17/test
+     - { os: linux, env: TEST_TASK=serial.MM CMAKE_OPTS="" MPI=false COMPILER="gcc" } # amber17/test
      
     # - { os: osx, env: TEST_TASK=serial.MM CMAKE_OPTS="" COMPILER="clang"} # amber17/test
 
@@ -37,13 +37,11 @@ addons:
     - python-tk
 
 install:
-    - sudo add-apt-repository -y "ppa:george-edison55/precise-backports" # get CMake 3
-    - sudo apt-get update
-    - sudo apt-get -y install --only-upgrade cmake cmake-data
     - pip install --user -r requirements.txt
     - git clone https://github.com/Amber-MD/ambertools-binary-build && cp ambertools-binary-build/conda_tools/amber.run_tests $HOME/
     - cp EXCLUDED_TESTS $HOME/
     - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
+    - install_cmake
     - download_ambertools
     - install_ambertools_travis
 

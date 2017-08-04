@@ -4,13 +4,15 @@ machine:
 
 dependencies:
   override:
-      - docker pull ambermd/amber-build-box
+      - docker pull ubuntu
 
 test:
   override:
-    - source devtools/ci/circleci_build.sh
-    - bash devtools/ci/circleci_test.sh || exit 1
+    - source devtools/ci/load_functions.sh
+    - download_ambertools
+    - build_ambertools
+    - run_tests
   post:
     - mkdir $CIRCLE_ARTIFACTS/ambertools-build
     - ls $HOME/TMP/
-    - cp -rf $HOME/TMP/* $CIRCLE_ARTIFACTS/ambertools-build
+    - cp -rf HOME/TMP/install/* $CIRCLE_ARTIFACTS/ambertools

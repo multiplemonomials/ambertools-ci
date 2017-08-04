@@ -12,6 +12,14 @@ function download_ambertools(){
     tar -xf $tarfile
 }
 
+function install_cmake_travis(){
+	sudo add-apt-repository -y "ppa:george-edison55/precise-backports" # get CMake 3
+	sudo apt-get update
+	
+	# for SOME REASON, on Travis, emacs-common conflicts with cmake 3, and the following command will also cause emacs-common to get removed.  Why?  I have NO IDEA!
+	sudo apt-get -y install --only-upgrade cmake cmake-data
+}
+
 function build_ambertools(){
     
 	mkdir -p $HOME/TMP/build
@@ -36,6 +44,10 @@ function install_ambertools_travis()
 		CMAKE_OPTS="$CMAKE_OPTS -DCOMPILER=clang -DCMAKE_Fortran_COMPILER_VERSION=4.6.4"
 	fi
 	
+	if [ "$MPI" = "true" ]; then
+		CMAKE_OPTS="$CMAKE_OPTS -DMPI=TRUE"
+	fi
+	
     set -ex
 
 	build_ambertools
@@ -47,29 +59,18 @@ function install_ambertools_circleci(){
 	make install
 }
 
-function run_long_test_simplified(){
-    source $HOME/TMP/install/amber.sh
-    # not running all tests, skip any long long test.
-    cd $HOME/amber$version/AmberTools/test
-    python $HOME/amber.run_tests -t $TEST_TASK -x $HOME/EXCLUDED_TESTS
-    # python $TRAVIS_BUILD_DIR/amber$version/AmberTools/src/conda_tools/amber.run_tests $TEST_TASK
-}
-
 function run_tests(){
     set -ex
     source $HOME/TMP/install/amber.sh
     ls $HOME/TMP/install
     ls $HOME/TMP/
     ls $HOME/TMP/*/
-   
-    if [ "$TEST_TASK" != "" ]; then
-        run_long_test_simplified
-    else
-        if [ "$SKIP_PYTHON" != "True" ]; then
-            cat $HOME/amber$version/AmberTools/src/conda-recipe/run_test.sh | sed "s/python/amber.python/g" > $HOME/run_test.sh
-            bash $HOME/run_test.sh
-        else
-            (cd $HOME/amber$version/AmberTools/test && make test.ambermini)
-        fi
-    fi
+	
+	cd $HOME/amber$version/AmberTools/test
+	
+	if [ "$MPI" = "true" ]; then
+		./test_at_parallel.sh
+	else
+		./test_at_serial.sh
+	fi
 }
