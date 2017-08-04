@@ -41,7 +41,7 @@ install:
     - git clone https://github.com/Amber-MD/ambertools-binary-build && cp ambertools-binary-build/conda_tools/amber.run_tests $HOME/
     - cp EXCLUDED_TESTS $HOME/
     - source devtools/ci/load_functions.sh # download_ambertools, install_ambertools_travis, run_tests
-    - install_cmake
+    - install_cmake_travis
     - download_ambertools
     - install_ambertools_travis
 
