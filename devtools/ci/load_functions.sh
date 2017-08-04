@@ -56,7 +56,7 @@ function install_ambertools_travis()
 
 function install_ambertools_circleci(){
     build_ambertools
-	make install
+	make -j2 install
 }
 
 function run_tests(){

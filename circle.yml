@@ -8,10 +8,8 @@ dependencies:
 
 test:
   override:
-    - source devtools/ci/load_functions.sh
-    - download_ambertools
-    - build_ambertools
-    - run_tests
+    - source devtools/ci/circleci_build.sh
+    - bash devtools/ci/circleci_test.sh || exit 1
   post:
     - mkdir $CIRCLE_ARTIFACTS/ambertools-build
     - ls $HOME/TMP/
