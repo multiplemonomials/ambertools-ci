@@ -3,7 +3,7 @@
 machine:
   environment:
     PATH: "/home/ubuntu/cmake-3.6.2-Linux-x86_64/bin:$PATH"
-    CMAKE_OPTS: "-DUSE_MINICONDA"
+    CMAKE_OPTS: "-DUSE_MINICONDA=TRUE"
     
 dependencies:
   cache_directories:
