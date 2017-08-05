@@ -55,8 +55,15 @@ function install_ambertools_travis()
 }
 
 function install_ambertools_circleci(){
+	CMAKE_OPTS="${CMAKE_OPTS} -DPRINT_PACKAGING_REPORT=TRUE -DPACKAGE_TYPE=DEB"
+
     build_ambertools
+	
+	echo "mpi.cfg:"
+	cat $HOME/amber$version/AmberTools/src/mpi4py-2.0.0/mpi.cfg
+	
 	make -j2 install
+	make -j2 package
 }
 
 function run_tests(){

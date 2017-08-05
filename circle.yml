@@ -23,6 +23,7 @@ test:
     - source devtools/ci/circleci_build.sh
     - bash devtools/ci/circleci_test.sh || exit 1
   post:
-    - mkdir $CIRCLE_ARTIFACTS/ambertools-build
+    - mkdir $CIRCLE_ARTIFACTS/ambertools
     - ls $HOME/TMP/
-    - cp -rf HOME/TMP/install/* $CIRCLE_ARTIFACTS/ambertools
+    - cp -rf $HOME/TMP/install/* $CIRCLE_ARTIFACTS/ambertools
+    - cp $HOME/TMP/build/*.deb $CIRCLE_ARTIFACTS
