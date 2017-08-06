@@ -45,8 +45,8 @@ install:
     - download_ambertools
     - install_ambertools_travis
 
-script:
-    - run_tests
+#script:
+#    - run_tests
 
 after_success:
     - echo "Congrats. Happy computing"
