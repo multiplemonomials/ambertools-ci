@@ -55,7 +55,7 @@ function install_ambertools_travis()
 }
 
 function install_ambertools_circleci(){
-	CMAKE_OPTS="${CMAKE_OPTS} -DPRINT_PACKAGING_REPORT=TRUE -DPACKAGE_TYPE=DEB"
+	CMAKE_OPTS="${CMAKE_OPTS} -DPRINT_PACKAGING_REPORT=TRUE"
 
     build_ambertools
 	
